@@ -1,8 +1,28 @@
 # cacharreo
+
 Repositorio de cacharreo
 
-## Aplicaciones
+* https://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/robot/
+* https://www.raspberrypi.org/courses/learn-python
+* https://projects.raspberrypi.org/en/projects/physical-computing
+* https://projects.raspberrypi.org/en/
+* https://thepihut.com/products/camjam-edukit
+* https://thepihut.com/products/camjam-edukit-2-sensors
+* https://thepihut.com/
+* https://www.raspberrypi.org/courses/learn-python
+* http://www.gr8computing.com/about/
+* https://codewith.mu/en/howto/1.0/install_raspberry_pi
+* https://pinout.xyz/
+* https://gpiozero.readthedocs.io/en/stable/index.html
+* https://machinelearningforkids.co.uk/#!/about
+* 
 
+
+
+  
+
+## Aplicaciones
+<!--
 1. Industrial Predictive Maintenance ()
    * https://icc.unisa.edu.au/about/icc-startups/ping-services/
    * https://www.engineering.com/story/iot-device-detects-wind-turbine-faults-in-the-field
@@ -26,7 +46,14 @@ Repositorio de cacharreo
      * https://blog.google/technology/ai/pattern-radio-whale-songs/
      * https://blog.google/technology/ai/whale-tale-about-responsibility-and-ai/
 
-
+* https://hardzone.es/2014/03/08/kinetis-kl03-el-procesador-de-32-bits-mas-pequeno-del-mundo/
+* https://www.digikey.es/es/products/detail/nxp-usa-inc/FRDM-KL03Z/4914982
+* https://www.nxp.com/docs/en/data-sheet/KL03P24M48SF0.pdf
+* https://www.syntiant.com/hardware
+* https://www.allaboutcircuits.com/news/edge-ai-chips-voice-activated-devices-save-power-protect-privacy/
+* https://www.ces.tech/articles/2020/syntiant%C2%AE-ndp100%E2%84%A2-neural-decision-processor%E2%84%A2.aspx
+* https://www.eetimes.com/6-mems-and-sensors-startups-on-fast-track-to-grow/3/
+-->
 
 ## Enlaces
 
