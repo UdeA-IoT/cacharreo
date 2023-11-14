@@ -1,11 +1,27 @@
 # Arduino ble
 
+## Hardware
+
+![tiny_machine_learning_kid](https://store-usa.arduino.cc/cdn/shop/products/AKX00028_02.unbox_1000x750.jpg?v=1615314707)
 
 Tiny Machine Learning Kid ([link](https://store.arduino.cc/products/arduino-tiny-machine-learning-kit)):
 - [x] ARDUINO Nano 33 Ble Sense Lite
+
+  ![arduino_nano_ble](https://images-na.ssl-images-amazon.com/images/I/61MC7q9EEVL._AC_UL600_SR600,600_.jpg)
+
 - [x] Tiny Machine Learning Shield
-- [x] OV7605 Camera Module
+
+  ![shield](https://asset.conrad.com/media10/isa/160267/c1/-/pl/856958272PI01/image.jpg?x=400&y=400&format=jpg&ex=400&ey=400&align=center)
+
+
+- [x] OV7605 Camera Module ([link](https://store-usa.arduino.cc/products/arducam-camera-module))
+  
+  ![arducam](https://store-usa.arduino.cc/cdn/shop/products/TPX00197_00.default_1001x751.jpg?v=1688636643)
+
+
 - [x] USB A - Micro USB Cable (1m)
+
+
 
 Documento: **Nano 33 BLE Sense** ([link](https://docs.arduino.cc/hardware/nano-33-ble-sense))
 
@@ -20,52 +36,98 @@ La información del kid se encuentra resumida en:
 ![pines_arduino_ble](https://content.arduino.cc/assets/NANO-33-BLE-Sense_sensor-indentification.png)
 https://docs.arduino.cc/hardware/nano-33-ble-sense
 
-## Instalación de librerias
+## Iniciando a trabajar
 
-Se siguieron los pasos de **Tutorial Software Assembly** ([link](Tutorial%20Software%20Assembly.pdf))
+Para mas información se siguieron los siguientes documentos:
+1. TinyML Kit Overview ([link](https://tinyml.seas.harvard.edu/assets/slides/4D/seminars/22.03.11_Marcelo_Rovai.pdf))
+2. 
 
-1. Agregar la board (Tools → Board → Boards Manager)
+## Instalación del hardware
+
+En la siguiente figura (tomada del siguiente [link](http://dejazzer.com/eece4710/docs/W62_Setup.pdf)) se muestran los pasos para usar el **Tiny Machine Learning Kid**
+
+![hw_setup](hw_setup.png)
+
+
+## Instalación del software
+
+### Agregar la board
+
+1. Abrir el **Board Manager** a traves del menu desplegable **Boards** (Tools → Board → Boards Manager) 
    
+   ![board_2](arduino-nano-ble2.png)
+
+2. En el cuadro de texto del **Boards Manager** coloque **mbed nano**. En las opciones que aparecen seleccione la opción **Arduino MBed OS Nano Boards** y proceda a la instalación
+   
+   ![board_3](arduino-nano-ble3.png)
    
 
-2. ss
+   Si la instalación fue exitosa el resultado será similar al mostrado a continuación:
+   
+   ![board_4](arduino-nano-ble4.png)
+   
+### Instalación de las librerias principes
+
+Para nuestro caso se instalarán las siguientes cuatro librerias:
+1. La libreria para **Tensorflow**.
+2. La libreria para del curso **Hardvard_TinyMLx**.
+3. Libreria para soporte **IMU** para la placa Arduino Nano 33 BLE sense.
+4. La libreria **Arduino BLE** 
+
+Para instalar una libreria se sigue el siguiente abre el **Library Manager** siguiendo la ruta: Tools → Manage Libraries. Si todo esta bien, se despliegua el administrador de librerias tal y como se muestra en la siguiente figura:
+
+![libreria-install](arduino-nano-ble6.png)
+
+### Libreria Tensorflow Lite
+
+En el administrador de librerias se puede instalar de acuerdo a la siguiente información:
+* Search Term: Tensorflow
+* Library Name: Adafruit TensorFlow Lite
+* Version: 1.2.3
+
+![libreria-1](arduino-nano-ble14.png)
+
+### Libreria Hardvard_TinyMLx
+
+Libreria del curso **HarvardX Profession Certificate in Tiny Machine Learning (TinyML)** ([link](https://www.edx.org/es/certificates/professional-certificate/harvardx-tiny-machine-learning), [repo](https://github.com/tinyMLx/courseware/tree/master/edX)). En esta libria se incluye la libreria asociada a la arducamara (camera OV767X).
+
+En el administrador de librerias se puede instalar de acuerdo a la siguiente información:
+* Search Term: tinyMLx
+* Library Name: Hardvard_TinyMLx
+* Version: 1.2.3-Alpha
+
+![libreria-2](arduino-nano-ble8.png)
+
+### Libreria Arduino_LSM9DS1
+
+Esta libreria da soporte al IMU (acelerometro, magnetometro y giroscopio) de la board Arduino Nano 33 BLE sense. 
+
+En el administrador de librerias se puede instalar de acuerdo a la siguiente información:
+* Search Term: LSM9DS1
+* Library Name: Arduino_LSM9DS1
+* Version: 1.1.1
+
+![libreria-3](arduino-nano-ble9.png)
+
+### Libreria ArduinoBLE
+
+Libreria que da soporte de conectividad BLE para diferentes placas de arduino entre ellas la placa Arduino Nano 33 BLE sense
+
+* Search Term: ArduinoBLE
+* Library Name: ArduinoBLE
+* Version: 1.3.6
+
+![libreria-4](arduino-nano-ble15.png)
+
+## Pruebas
 
 
-mbed nano
 
-3. sss
 
-4. ss
 
-Open the Library Manager, which you can find via the Tools drop-down menu. Navigate,
-as follows: Tools → Manage Libraries
 
-* The Tensorflow Lite Micro Library
 
-Tensorflow
 
-The Tensorflow Lite Micro Library:
-Search Term: Tensorflow
-Library Name: Arduino_TensorFlowLite
-Version: 2.4.0-ALPHA
-
----
-
-The Tensorflow Lite Micro Library:
-Search Term: Tensorflow
-Library Name: Hardvard_TinyMLx
-Version: 1.2.3-ALPHA
-
-**The library that supports the accelerometer, magnetometer, and gyroscope on the
-Nano 33 BLE sense**
-
-Search Term: LSM9DS1
-Library Name: Arduino_LSM9DS1
-Version: 
-
-Search Term: ArduinoBLE
-Library Name: ArduinoBLE
-Version: 1.2.1 or newer (tested up to 1.2.2)
 
 Se complemento de aqui:
 http://dejazzer.com/eece4710/docs/W62_Setup.pdf
@@ -93,6 +155,9 @@ void loop() {
   delay(1000);                      // wait for a second
 }
 ```
+
+
+
 
 
 ss
@@ -140,6 +205,8 @@ void loop() {
 }
 ```
 
+https://tinyml.seas.harvard.edu/assets/other/4D/22.03.11_Marcelo_Rovai_Handout.pdf
+
 
 
 # Referencias
@@ -151,3 +218,4 @@ void loop() {
 * https://tinyml.seas.harvard.edu/
 * https://machinelearningforkids.co.uk/#!/stories/ml-hasnt-replaced-coding
 * http://dejazzer.com/eece4710/index.html#1_intro
+* http://dejazzer.com/eece4710/index.html
