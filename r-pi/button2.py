@@ -1,0 +1,8 @@
+from gpiozero import Button, LED
+
+btn = Button(4)
+led = LED(17)
+
+btn.when_pressed = led.on
+btn.when_released = led.off
+
