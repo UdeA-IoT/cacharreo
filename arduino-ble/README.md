@@ -32,9 +32,9 @@ La información del kid se encuentra resumida en:
 2. **Tutorial Software Assembly** ([link](Tutorial%20Software%20Assembly.pdf))
 3. **Tutorial Step by Step**([link](Tutorial%20Step%20by%20step%20-1.pdf))
 
+A continuación se muestra el Arduino Nano 33 BLE
 
-![pines_arduino_ble](https://content.arduino.cc/assets/NANO-33-BLE-Sense_sensor-indentification.png)
-https://docs.arduino.cc/hardware/nano-33-ble-sense
+![arduino_nano_ble](arduino-nano-ble.png)
 
 ## Iniciando a trabajar
 
@@ -121,24 +121,23 @@ Libreria que da soporte de conectividad BLE para diferentes placas de arduino en
 
 ## Pruebas
 
+Una vez todos los requisitos para trabajar estan completados vamos a llevar a cabo las pruebas de funcionamiento basicas en la placa tal y como se expone en **TinyML Kit Overview - HW and SW Installation & Test** ([link](https://tinyml.seas.harvard.edu/assets/slides/4D/seminars/22.03.11_Marcelo_Rovai.pdf)). Los pasos para realizar las pruebas se muestran a continuación:
+1. Seleccionar la placa y el puerto: en nuestro caso la placa es la Arduino Nano 33 BLE
+
+   ![select_board](arduino-nano-ble16.png)
+
+2. Codificar el programa y descargarlo.
 
 
+### Pruebas basicas
 
+#### Ejemplo 1 - Parpadeo
+   
+Vamos a ejecutar el ejemplo mas basico y descargalo. Para ello seleccionamos el ejemplo **Blink** en el menú de ejemplos que vienen integrados al IDE (File → Examples → 01.Basics → Blink)
 
+![ejemplo1](arduino-nano-ble11.png)
 
-
-
-
-Se complemento de aqui:
-http://dejazzer.com/eece4710/docs/W62_Setup.pdf
-
-
-## Primer test
-
-Ver: 
-* http://dejazzer.com/eece4710/docs/W62_Setup.pdf
-* 
-
+A continuación se muestra el codigo del ejemplo:
 
 ```ino
 // the setup function runs once when you press reset or power the board
@@ -156,15 +155,9 @@ void loop() {
 }
 ```
 
+#### Ejemplo 2 - Parpadeo led RGB
 
-
-
-
-ss
-
-
-
-https://support.arduino.cc/hc/en-us/articles/360016724140-How-to-control-the-RGB-LED-and-Power-LED-of-the-Nano-33-BLE-boards-?queryID=f8337761d7af67e7a4ba29aec63d3949
+Este ejemplo se tomo de la pagina **How to control the RGB LED and Power LED of the Nano 33 BLE boards?** ([link](https://support.arduino.cc/hc/en-us/articles/360016724140-How-to-control-the-RGB-LED-and-Power-LED-of-the-Nano-33-BLE-boards-?queryID=f8337761d7af67e7a4ba29aec63d3949)). A continuación se muestra el código implementado:
 
 ```ino
 // How to control the RGB Led and Power Led of the Nano 33 BLE boards.  
@@ -205,13 +198,238 @@ void loop() {
 }
 ```
 
-https://tinyml.seas.harvard.edu/assets/other/4D/22.03.11_Marcelo_Rovai_Handout.pdf
+### Pruebas sensores
+
+#### IMU
+
+https://github.com/tinyMLx/arduino-library/tree/main/examples/test_IMU
+
+
+```ino
+#include <Arduino_LSM9DS1.h>
+
+int imuIndex = 0; // 0 - accelerometer, 1 - gyroscope, 2 - magnetometer
+bool commandRecv = false; // flag used for indicating receipt of commands from serial port
+bool startStream = false;
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial);
+
+  // Initialize IMU
+  if (!IMU.begin()) {
+    Serial.println("Failed to initialize IMU");
+    while (1);
+  }
+
+  Serial.println("Welcome to the IMU test for the built-in IMU on the Nano 33 BLE Sense\n");
+  Serial.println("Available commands:");
+  Serial.println("a - display accelerometer readings in g's in x, y, and z directions");
+  Serial.println("g - display gyroscope readings in deg/s in x, y, and z directions");
+  Serial.println("m - display magnetometer readings in uT in x, y, and z directions");
+}
+
+void loop() {
+  String command;
+
+  // Read incoming commands from serial monitor
+  while (Serial.available()) {
+    char c = Serial.read();
+    if ((c != '\n') && (c != '\r')) {
+      command.concat(c);
+    } 
+    else if (c == '\r') {
+      commandRecv = true;
+      command.toLowerCase();
+    }
+  }
+
+  // Command interpretation
+  if (commandRecv) {
+    commandRecv = false;
+    if (command == "a") {
+      imuIndex = 0;
+      if (!startStream) {
+        startStream = true;
+      } 
+      delay(3000);
+    }
+    else if (command == "g") {
+      imuIndex = 1;
+      if (!startStream) {
+        startStream = true;
+      }
+      delay(3000);
+    }
+    else if (command == "m") {
+      imuIndex = 2;
+      if (!startStream) {
+        startStream = true;
+      }
+      delay(3000);
+    }
+  }
+
+
+  float x, y, z;
+  if (startStream) {
+    if (imuIndex == 0) { // testing accelerometer
+      if (IMU.accelerationAvailable()) {
+        IMU.readAcceleration(x, y, z);
+  
+        Serial.print("Ax:");
+        Serial.print(x);
+        Serial.print(' ');
+        Serial.print("Ay:");
+        Serial.print(y);
+        Serial.print(' ');
+        Serial.print("Az:");
+        Serial.println(z);
+      }
+    }
+    else if (imuIndex == 1) { // testing gyroscope
+      if (IMU.gyroscopeAvailable()) {
+        IMU.readGyroscope(x, y, z);
+  
+        Serial.print("wx:");
+        Serial.print(x);
+        Serial.print(' ');
+        Serial.print("wy:");
+        Serial.print(y);
+        Serial.print(' ');
+        Serial.print("wz:");
+        Serial.println(z);
+      }
+    }
+    else if (imuIndex == 2) { // testing magnetometer
+      if (IMU.magneticFieldAvailable()) {
+        IMU.readMagneticField(x, y, z);
+  
+        Serial.print("Bx:");
+        Serial.print(x);
+        Serial.print(' ');
+        Serial.print("By:");
+        Serial.print(y);
+        Serial.print(' ');
+        Serial.print("Bz:");
+        Serial.println(z);
+      }
+    }
+  }
+}
+```
+
+#### Microfono
+
+https://github.com/tinyMLx/arduino-library/tree/main/examples/test_microphone
+
+
+```ino
+/*
+  Active Learning Labs
+  Harvard University 
+  tinyMLx - Built-in Microphone Test
+*/
+
+#include <PDM.h>
+#include <TinyMLShield.h>
+
+// PDM buffer
+short sampleBuffer[256];
+volatile int samplesRead;
+
+bool record = false;
+bool commandRecv = false;
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial);  
+
+  // Initialize the TinyML Shield
+  initializeShield();
+
+  PDM.onReceive(onPDMdata);
+  // Initialize PDM microphone in mono mode with 16 kHz sample rate
+  if (!PDM.begin(1, 16000)) {
+    Serial.println("Failed to start PDM");
+    while (1);
+  }
+
+  Serial.println("Welcome to the microphone test for the built-in microphone on the Nano 33 BLE Sense\n");
+  Serial.println("Use the on-shield button or send the command 'click' to start and stop an audio recording");
+  Serial.println("Open the Serial Plotter to view the corresponding waveform");
+}
+
+void loop() {
+  // see if the button is pressed and turn off or on recording accordingly
+  bool clicked = readShieldButton();
+  if (clicked){
+    record = !record;
+  }
+  
+  // see if a command was sent over the serial monitor and record it if so
+  String command;
+  while (Serial.available()) {
+    char c = Serial.read();
+    if ((c != '\n') && (c != '\r')) {
+      command.concat(c);
+    } 
+    else if (c == '\r') {
+      commandRecv = true;
+      command.toLowerCase();
+    }
+  }
+
+  // parse the command if applicable
+  if (commandRecv && command == "click") {
+    commandRecv = false;
+    record = !record;
+  }
+
+  // display the audio if applicable
+  if (samplesRead) {
+    // print samples to serial plotter
+    if (record) {
+      for (int i = 0; i < samplesRead; i++) {
+        Serial.println(sampleBuffer[i]);
+      }
+    }
+    // clear read count
+    samplesRead = 0;
+  } 
+}
+
+void onPDMdata() {
+  // query the number of bytes available
+  int bytesAvailable = PDM.available();
+
+  // read data into the sample buffer
+  PDM.read(sampleBuffer, bytesAvailable);
+
+  samplesRead = bytesAvailable / 2;
+}
+```
+
+
+#### Ejemplo Camara
+
+En construcción
+
+## Referencias principales
+
+Para los ultimos ejemplos nos estamos basando en: 
+
+* http://dejazzer.com/eece4710/docs/W63_Testing.pdf
+* https://tinyml.seas.harvard.edu/assets/other/4D/22.03.11_Marcelo_Rovai_Handout.pdf
+* http://dejazzer.com/eece4710/docs/W62_Setup.pdf
+* http://dejazzer.com/eece4710/docs/W63_Testing.pdf
 
 
 
 # Referencias
 
-
+* http://dejazzer.com/eece4710/docs/W63_Testing.pdf
+* https://tinyml.seas.harvard.edu/assets/other/4D/22.03.11_Marcelo_Rovai_Handout.pdf
 * https://hackmd.io/@unipd/HkAnHT7b9#13-TinyML-hands-on-examples
 * https://tinyml.seas.harvard.edu/courses/
 * https://www.datacamp.com/blog/what-is-tinyml-tiny-machine-learning
