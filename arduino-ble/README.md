@@ -40,7 +40,7 @@ A continuación se muestra el Arduino Nano 33 BLE
 
 Para mas información se siguieron los siguientes documentos:
 1. TinyML Kit Overview ([link](https://tinyml.seas.harvard.edu/assets/slides/4D/seminars/22.03.11_Marcelo_Rovai.pdf))
-2. 
+
 
 ## Instalación del hardware
 
@@ -424,9 +424,24 @@ Para los ultimos ejemplos nos estamos basando en:
 * http://dejazzer.com/eece4710/docs/W62_Setup.pdf
 * http://dejazzer.com/eece4710/docs/W63_Testing.pdf
 
+## Pendiendes
 
+- [ ] Programar los ejemplos usando platformio
 
-# Referencias
+Ver:
+* https://sensiml.com/documentation/firmware/arduino-nano33/arduino-nano33.html
+* https://www.edgeimpulse.com/blog/platformio
+* https://kevinxli.medium.com/manage-two-arduinos-with-ease-using-platformio-4f83ad4a8868
+* https://www.cs.cmu.edu/~sensing-sensors/
+* http://dejazzer.com/eece4710/docs/W7_Assignment.pdf
+* https://github.com/gigwegbe/tinyml-papers-and-projects
+* https://registry.platformio.org/libraries/tinymlx/Harvard_TinyMLx
+* https://edgeimpulse.com/blog/platformio
+* https://www.hackster.io/news/easy-tinyml-on-esp32-and-arduino-a9dbc509f26c
+* https://eloquentarduino.com/
+* https://gist.github.com/peopzen/ce7eaa229ed408d1b4c63f4a4ac8c12b
+
+## Referencias
 
 * http://dejazzer.com/eece4710/docs/W63_Testing.pdf
 * https://tinyml.seas.harvard.edu/assets/other/4D/22.03.11_Marcelo_Rovai_Handout.pdf
