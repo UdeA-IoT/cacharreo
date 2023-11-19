@@ -1,21 +1,7 @@
 # cacharreo
 
-Repositorio de cacharreo
 
-* https://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/robot/
-* https://www.raspberrypi.org/courses/learn-python
-* https://projects.raspberrypi.org/en/projects/physical-computing
-* https://projects.raspberrypi.org/en/
-* https://thepihut.com/products/camjam-edukit
-* https://thepihut.com/products/camjam-edukit-2-sensors
-* https://thepihut.com/
-* https://www.raspberrypi.org/courses/learn-python
-* http://www.gr8computing.com/about/
-* https://codewith.mu/en/howto/1.0/install_raspberry_pi
-* https://pinout.xyz/
-* https://gpiozero.readthedocs.io/en/stable/index.html
-* https://machinelearningforkids.co.uk/#!/about
-* 
+
 
 
 
