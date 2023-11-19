@@ -19,10 +19,12 @@ Este ejemplo no dio. La tarjeta al parecer no tiene sensor de temperatura
 
 https://docs.arduino.cc/tutorials/nano-33-ble-sense/proximity-sensor
 
+La solución al problema de la programación del Arduino Nano 33 BLE se encuentra en el siguiente foro: https://community.platformio.org/t/issues-flashing-arduino-nano-33-ble-with-platformio-on-vscode/34458
+
 
 ```ini 
 [env:nano33ble]
-platform = nordicnrf52
+platform = nordicnrf52@9.5.0
 board = nano33ble
 framework = arduino
 lib_deps = arduino-libraries/Arduino_APDS9960@^1.0.4
