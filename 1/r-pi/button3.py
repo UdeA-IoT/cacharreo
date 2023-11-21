@@ -30,6 +30,14 @@ while True:
     led.off()
     print(end - start)
 
+"""
+Extension ideas
+
+If you would like to, you can attempt the following challenges to extend your game:
+* Add another button press at the end of the loop to reset the game
+* Store the lowest reaction time so far as a time to beat, and update it each time it is beaten
+"""
+
 
 
 while True:
