@@ -65,7 +65,7 @@ elif temperature >= 35 or temperature <= -15:
     sense.show_message("The temperature is extreme!")
 ```
 
-Ejemplo 4: Make an outfit recommender
+Ejemplo 4 - Make an outfit recommender: https://trinket.io/python/cca7dc0dd1
 
 Create a program using the Sense HAT emulator that suggests an outfit depending on the temperature and humidity.
 
@@ -75,3 +75,33 @@ Your program should suggest:
 * A hat when the temperature is at least 22°C OR the humidity is over 40%
 
 What other outfit suggestions could your program make?
+
+
+```python
+from sense_hat import SenseHat
+import time
+
+sense = SenseHat()
+
+
+while True: 
+  temperature = round(sense.temperature, 1)
+  humidity = round(sense.humidity, 1)
+
+  if temperature < 25 and humidity > 35:
+    sense.show_message("You need a thick winter jacket")
+  elif temperature >= 22 or humidity >= 40:
+    sense.show_message("You need a hat")
+```
+
+## Camara:
+
+* https://www.raspberrypi.com/news/a-hedgehog-cam-or-two/
+* https://iancarpenter.dev/2016/08/28/a-step-by-step-guide-to-building-a-raspberry-pi-hedgehog-camera/
+* https://blog.adafruit.com/2022/12/15/outdoor-case-raspberry-pi-zero-for-hedgehog-house-3dthursday-3dprinting/
+* https://makezine.com/article/craft/photography-video/spy-on-garden-critters-with-raspberry-pi-powered-night-vision/
+* https://www-users.york.ac.uk/~mjf5/hedgehog_camera/index.html
+
+
+
+
