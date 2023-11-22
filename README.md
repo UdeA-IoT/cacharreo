@@ -2,7 +2,10 @@
 
 
 
+## Enlaces rPi
 
+* https://raspberry-valley.azurewebsites.net/
+* https://realpython.com/python-raspberry-pi/
 
 
   
@@ -41,9 +44,9 @@
 * https://www.eetimes.com/6-mems-and-sensors-startups-on-fast-track-to-grow/3/
 -->
 
-## Enlaces
+## Enlaces Tiny-ml
 
-* https://tinyml.seas.harvard.edu/
+* * https://tinyml.seas.harvard.edu/
 * https://tinyml.seas.harvard.edu/4D/AcademicNetwork
 * https://tinyml.seas.harvard.edu/courses/
 * http://dejazzer.com/eece4710/index.html
