@@ -1,5 +1,10 @@
 # Rasberri Pi
 
+## Para revisar
+
+1. https://bluedot.readthedocs.io/en/latest/gettingstarted.html
+2. https://bluedot.readthedocs.io/en/latest/
+
 ## Referencias
 
 1. https://projects.raspberrypi.org/en/projects/introduction-to-the-pico/0

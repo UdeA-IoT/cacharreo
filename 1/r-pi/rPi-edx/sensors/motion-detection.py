@@ -6,3 +6,4 @@ buz = Buzzer(17)
 
 while True:
     print(pir.motion_detected)
+    sleep(1)
