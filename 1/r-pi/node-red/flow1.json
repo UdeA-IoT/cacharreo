@@ -1,0 +1,102 @@
+[
+    {
+        "id": "a81bd2735ebc682b",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "651f7c81d07f3f91",
+        "type": "rpi-gpio out",
+        "z": "a81bd2735ebc682b",
+        "name": "Red LED",
+        "pin": "17",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 480,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "6eb584b004d1f161",
+        "type": "inject",
+        "z": "a81bd2735ebc682b",
+        "name": "On",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "651f7c81d07f3f91",
+                "a55d4cb53a1fee0b"
+            ]
+        ]
+    },
+    {
+        "id": "655ea2086d0bf295",
+        "type": "inject",
+        "z": "a81bd2735ebc682b",
+        "name": "Off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 190,
+        "y": 240,
+        "wires": [
+            [
+                "651f7c81d07f3f91",
+                "a55d4cb53a1fee0b"
+            ]
+        ]
+    },
+    {
+        "id": "a55d4cb53a1fee0b",
+        "type": "debug",
+        "z": "a81bd2735ebc682b",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 80,
+        "wires": []
+    }
+]

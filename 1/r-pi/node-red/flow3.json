@@ -1,0 +1,123 @@
+[
+    {
+        "id": "3ff1b4dac67bc190",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2714b86db734fc85",
+        "type": "rpi-gpio out",
+        "z": "3ff1b4dac67bc190",
+        "name": "Red LED",
+        "pin": "17",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 660,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "eee1578fb0b0af91",
+        "type": "delay",
+        "z": "3ff1b4dac67bc190",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "723cc2be63703bb9",
+                "c7ecd796513c0846"
+            ]
+        ]
+    },
+    {
+        "id": "c7ecd796513c0846",
+        "type": "rpi-gpio out",
+        "z": "3ff1b4dac67bc190",
+        "name": "Green LED",
+        "pin": "27",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 670,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "4e134e0c9ca33ce8",
+        "type": "inject",
+        "z": "3ff1b4dac67bc190",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "eee1578fb0b0af91",
+                "2714b86db734fc85"
+            ]
+        ]
+    },
+    {
+        "id": "723cc2be63703bb9",
+        "type": "change",
+        "z": "3ff1b4dac67bc190",
+        "name": "change to 0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 220,
+        "wires": [
+            [
+                "2714b86db734fc85"
+            ]
+        ]
+    }
+]
