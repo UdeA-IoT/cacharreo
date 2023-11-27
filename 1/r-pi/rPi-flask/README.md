@@ -1,6 +1,6 @@
 # Flask in rPi
 
-Este 
+Este ejemplo se tomo de: https://projects.raspberrypi.org/en/projects/python-web-server-with-flask
 
 ```
 sudo pip install flask
