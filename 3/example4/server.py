@@ -9,7 +9,8 @@ import os
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
+app.led_status = False
+app.port = None
 
 templates = Jinja2Templates(directory="templates")
 
@@ -28,61 +29,28 @@ async def read_item(request: Request, id: str):
 # https://fastapi.tiangolo.com/tutorial/request-forms/ (Instalar)
 # https://eugeneyan.com/writing/how-to-set-up-html-app-with-fastapi-jinja-forms-templates/
 
-"""
-@app.get("/")
-async def home(response_class=HTMLResponse):
-    with open(os.path.join("templates", 'index.html')) as fh:
-        data = fh.read()
-    return Response(content=data, media_type="text/html")    
-"""
 
 @app.get('/')
-def read_root():
-    return 'Ensayo'
+def root():
+    return 'Test'
 
 @app.get("/home", response_class=HTMLResponse)
 async def read_item(request: Request):
     puertos = ["COM1", "COM2", "COM3"]
     return templates.TemplateResponse("index.html", {"request": request, "puertos": puertos})
 
-
 @app.get("/control")
-async def control(port: str):
-    print(port)
+async def control(request: Request, port: str):
+    print(request)
+    app.port = port
+    return templates.TemplateResponse("control.html", {"request": request, "puerto": app.port})
 
-    """
-    app.serial = serial.Serial(port_id,9600)
-
-    if app.serial == None:
-        return {"Connection": "Fail"}
+@app.get("/led_change")
+async def led_on(request: Request):
+    print(request)
+    app.led_status = not(app.led_status)
+    if app.led_status:
+        print("LED: On")
     else:
-        return {"Connection": "Open", }
-    """
-
-"""
-
-               value="{{ request.form['title'] }}"></input>
-
-
-@app.get("/connect", response_class=HTMLResponse)
-async def read_item(request: Request):
-    puertos = ["COM1", "COM2", "COM3"]
-    return templates.TemplateResponse("index.html", {"request": request, "puertos": puertos})
-
-
-@app.route('/create/', methods=('GET', 'POST'))
-def create():
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-
-        if not title:
-            flash('Title is required!')
-        elif not content:
-            flash('Content is required!')
-        else:
-            messages.append({'title': title, 'content': content})
-            return redirect(url_for('index'))
-
-    return render_template('create.html')
-"""
+        print("LED: Off")
+    return templates.TemplateResponse("control.html", {"request": request, "puerto": app.port})
