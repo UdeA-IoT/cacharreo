@@ -47,7 +47,7 @@ async def read_item(request: Request):
 
 
 @app.get("/control")
-async def test(port: str):
+async def control(port: str):
     print(port)
 
     """
