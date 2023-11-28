@@ -10,11 +10,14 @@
 
 <body>
     <h1> Control LED </h1>
-    <select id="port-list" name="select">
-        {% for puerto in puertos %}
-          <option value="{{ puerto }}">{{ puerto }}</option>
-        {% endfor %}
-    </select>
-    <button type="button" onclick="window.location.href='control.html'">Conectar</button>
+    <form action="control" id="port_form">
+        <select id="port_select" name="port">
+            {% for puerto in puertos %}
+            <option value="{{ puerto }}">{{ puerto }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Conectar</button>
+    </form>
 </body>
+
 </html>
