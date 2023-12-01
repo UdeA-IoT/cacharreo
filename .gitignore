@@ -1,5 +1,51 @@
+
+
+# Referencia tomada de: https://github.com/github/gitignore/blob/main/Python.gitignore
 .pioenvs
 .piolibdeps
 .clang_complete
 .gcc-flags.json
 .pio
+
+# Tomado de: https://github.com/thingsboard/esp32-ota/blob/master/.gitignore
+/build
+/.vscode
+sdkconfig*
+*.code-workspace
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
