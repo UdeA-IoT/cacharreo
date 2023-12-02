@@ -209,8 +209,42 @@ Vamos a instalar bazel: https://bazel.build/?hl=es-419
 
 1. Averiguar la version de windows
 2. Instalar los requisitos previos: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
-3. 
+3. Descarga Bazel (https://github.com/bazelbuild/bazelisk):
+   * Para WindowsSi no se tiene instalado el Chocolatey instalelo (https://chocolatey.org/)
+   * Si lo tiene instalado ejecute como administrador:
+  
+     ```
+     choco install bazelisk
+     ```
 
+4. Verificar la instalación:
+   
+   ```
+   bazel version
+   ```
+
+En una ruta conocida descargue el tensor flow (vamos a hacerlo con el nuevo):
+
+Siguiendo: https://www.tensorflow.org/lite/microcontrollers?hl=es-419
+
+Vamos para el repo: https://github.com/tensorflow/tflite-micro.git
+
+Se van a correr los scripts.
+
+Antes de usar bazel: https://bazel.build/start/cpp?hl=es-419 tener en cuenta:
+* WORKSPACE file 
+* BUILD files
+
+Veamos el siguiente foro: https://github.com/bazelbuild/bazel/issues/17655
+
+https://bazel.build/concepts/dependencies?hl=es-419
+
+
+Parece que hay este problema: https://www.tensorflow.org/install/gpu?hl=es-419
+
+Toca probar en el WSL si da:
+
+Tampoco dio.
 
 
 
