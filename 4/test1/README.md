@@ -11,7 +11,6 @@ En general, el proceso para configurar una actualización OTA en el ESP32 implic
 
 Vemos a ver este manual: https://github.com/espressif/esp-idf/tree/1067b28/examples/system/ota
 
-
 Si todo esta bien el microcontrolador debera empezar a parpadear..
 
 ## Referencias

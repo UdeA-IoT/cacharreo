@@ -33,7 +33,15 @@ void setup(void) {
     Serial.println("Connecting to WiFi..");
   }
   // Print ESP Local IP Address
+  Serial.println("");
+  Serial.print("Connected to ");
+  Serial.println(ssid);
+  Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+  
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(200, "text/plain", "Hi! This is a sample response.");
+  });
 
   AsyncElegantOTA.begin(&server);    // Start AsyncElegantOTA
   server.begin();
