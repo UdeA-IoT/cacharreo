@@ -246,6 +246,14 @@ Toca probar en el WSL si da:
 
 Tampoco dio.
 
+Verificar usando la informacion del libro al estilo vieja guardia. Usar el make del linux a ver si da pues a lo bazel no dió.
+
+Siguiendo con las librerias: https://support.arduino.cc/hc/en-us/articles/4415103213714-Find-sketches-libraries-board-cores-and-other-files-on-your-computer
+
+En la maquina, localmente las de tensor estan en:
+C:\Users\Usuario\Documents\Arduino\libraries\Harvard_TinyMLx
+
+
 
 
 El de Tensor Flow
