@@ -253,6 +253,11 @@ Siguiendo con las librerias: https://support.arduino.cc/hc/en-us/articles/441510
 En la maquina, localmente las de tensor estan en:
 C:\Users\Usuario\Documents\Arduino\libraries\Harvard_TinyMLx
 
+# Pendiente por ver
+
+Intentar hacer uso del make... https://www.tensorflow.org/lite/microcontrollers/library?hl=es-419
+
+1. https://www.tensorflow.org/lite/microcontrollers?hl=es-419 (siga el flujo de trabajo)
 
 
 
