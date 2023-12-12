@@ -11,7 +11,10 @@ def home():
 
 @app.route('/reporter/<int:reporter_id>')
 def reporter(reporter_id):
-    return f'Reporter {reporter_id} Bio'
+    return f'''
+    <h2>Reporter {reporter_id} Bio</h2>
+    <a href="/">Return to home page</a>
+    '''
 
 
 if __name__ == '__main__':
