@@ -5,18 +5,14 @@ app = Flask(__name__)
 
 @app.route('/')
 @app.route('/home')
-def hello_world():  # put application's code here
-    # return 'Hello World!'
-    return '<h1>Hello World!</h1>'
+def home():
+    return '<h1>Hello, World!</h1>'
 
-@app.route('/reporter')
-def reporter():
-    # return 'Reporter Bio'
-    # return '<h2>Reporter Bio</h2>'
-    return '''
-        <h2>Reporter Bio</h2>
-        <a href="/">Return to home page</a>
-        '''
+
+@app.route('/reporter/<int:reporter_id>')
+def reporter(reporter_id):
+    return f'Reporter {reporter_id} Bio'
+
 
 if __name__ == '__main__':
     app.run()

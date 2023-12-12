@@ -76,6 +76,22 @@ We covered a lot in this lesson, so let’s review what we learned:
 
 **Referencia principal**: Introduction to Flask ([link](https://www.codecademy.com/learn/paths/build-python-web-apps-flask/tracks/introduction-to-flask/modules/introduction-to-flask/cheatsheet))
 
+### Variable rules
+
+```py
+@app.route('/orders/<user_name>/<int:order_id>')
+def orders(user_name, order_id):
+    return f'<p>Fetching order #{order_id} for {user_name}.</p>'
+```
+
+Note that we can also optionally enforce the type of the variable being accepted using the syntax: ```<converter:variable_name>```. The possible converter types are:
+
+|string|accepts any text without a slash (default)|
+|---|---|
+|int|accepts positive integers|
+|float|accepts positive floating point values|
+|path|like string but also accepts slashes|
+|uuid|accepts UUID strings|
 
 
 
