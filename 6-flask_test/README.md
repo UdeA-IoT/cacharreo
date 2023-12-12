@@ -94,7 +94,34 @@ Note that we can also optionally enforce the type of the variable being accepted
 |uuid|accepts UUID strings|
 
 
+## Review
 
+Congratulations on building your first Flask app!
+
+You’ve learned to:
+
+* Import the Flask class and create an application object
+
+```py
+from flask import Flask
+app = Flask(__name__)
+```
+
+* Define routes for handling requests sent from various URLs
+
+```py
+@app.route('/')
+def home():
+    return '<h1>Hello, World!</h1>'
+```
+
+* Create variable rules to handle dynamic URLs
+
+```py
+@app.route('/orders/<user_name>/<int:order_id>')
+def orders(user_name, order_id):
+    return f'<p>Fetching order #{order_id} for {user_name}.</p>'
+```
 
 ## Referencias
 
