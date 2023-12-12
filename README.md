@@ -6,6 +6,23 @@
 
 * https://raspberry-valley.azurewebsites.net/
 * https://realpython.com/python-raspberry-pi/
+* https://microsoft.github.io/AI-For-Beginners/
+* https://github.com/microsoft/IoT-For-Beginners
+* https://explore.skillbuilder.aws/learn/course/external/view/elearning/402/internet-of-things-foundation-series
+* https://github.com/mikeroyal/IoT-Guide
+* https://github.com/MuhammadMooazam/Internet-of-Things-Course
+* https://github.com/phodal/awesome-iot
+* https://github.com/aws-samples/aws-iot-examples
+* https://github.com/aws/aws-iot-device-sdk-embedded-C
+* https://github.com/aws
+* https://developer.cisco.com/codeexchange/github/repo/akramIOT/IOT-Telemetry-data_AWS_Cloud_Data_Lake-/
+* https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-raspberry-pi-kit-node-get-started
+* https://github.com/microsoft/Data-Science-For-Beginners
+* https://github.com/microsoft/Web-Dev-For-Beginners?WT.mc_id=academic-0000-abartolo
+* https://github.com/microsoft/ML-For-Beginners
+* https://github.com/microsoft/Mastering-GitHub-Copilot-for-Paired-Programming?WT.mc_id=academic-113596-abartolo
+* https://microsoft.github.io/Web-Dev-For-Beginners/#/
+* https://docs.github.com/es/codespaces/getting-started/quickstart
 
 
   
