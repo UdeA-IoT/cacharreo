@@ -13,19 +13,19 @@ En este repositorio se va a tratar de documentar y almacenar el ejemplo tomado d
 
 Crear un red neuronal de tres capas que prediga la salida de una función seno $y = \sin(x)$ con $0\leq x \leq 2\pi$. La siguiente figura (tomada de la pagina del autor) resume el modelo:
 
-![red_modelo](https://www.digikey.com/maker-media/3725c096-df49-4d6a-a97f-6ed8f1cb6389)
+![red_modelo](network_architecture.png)
 
 
 El siguiente diagrama resume le modelo:
 
-![modelo_diagrama](https://www.digikey.com/maker-media/064e0416-7ba0-4949-bacd-64c9aa541e5e)
+![modelo_diagrama](network_model.png)
 
 La siguiente figura resume el esquema de trabajo:
 1. Crear y entrenar el modelo usando TensorFlow.
 2. Convertir el modelo creado usando el TensorFlow Lite converter. El resultado de esta operación será un modelo **tflite**.
 3. Almacenar el modelo **tflite** como un arreglo de bytes en una matriz de constantes en lenguaje C (archivo .c y .h). Esta matriz será la que permitirá cargar el modelo y usarlo para realizar las inferencias por medio de la biblioteca TensorFlow Lite para microcontroladores.  
 
-![desarrollo](https://www.digikey.com/maker-media/c549ad96-9049-4e48-905c-875d3ebc6dba)
+![desarrollo](TFLite.png)
 
 Veamos cada parte del procedimiento.
 
