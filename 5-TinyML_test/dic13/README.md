@@ -91,6 +91,14 @@ En la siguiente figura tomada del siguiente [link](https://medium.com/swlh/icon-
 ![summary](summary.png)
 
 
+## Parte 2 - Descarge del modelo en la placa de desarrollo
+
+En esta parte lo que se va a realizar es seguir el tutorial **Intro to TinyML Part 2: Deploying a TensorFlow Lite Model to Arduino** ([link](https://www.digikey.com/en/maker/projects/intro-to-tinyml-part-2-deploying-a-tensorflow-lite-model-to-arduino/59bf2d67256f4b40900a3fa670c14330)) adaptando las partes que sean necesarias con el fin de que se ejecute este modelo en el Arduino Nano 33 Sense Lite ([informacion importante](https://forum.arduino.cc/t/a-difference-between-a-n-33-ble-sense-vs-sense-lite/1030305)).
+
+Antes de empezar es importante aclara que el ejemplo en el tutorial se realizo empleando las librerias de tensorflow **Arduino_TensorFlowLite**, sin embargo, estas ya no se encuentran en el repo oficial por que se actualizaron. Sin embargo, si lo que se desea es correr el ejemplo aqui dado, estas se pueden se encuentran a continuación [Arduino_TensorFlowLite-1.15.0-ALPHA.zip](Arduino_TensorFlowLite-1.15.0-ALPHA.zip). 
+
+
+
 
 ## Mas herramientas
 
@@ -114,5 +122,9 @@ En la siguiente figura tomada del siguiente [link](https://medium.com/swlh/icon-
 8. https://www.digikey.com/en/maker/projects/tensorflow-lite-tutorial-part-2-speech-recognition-model-training/d8d04a2b60a442cf8c3fa5c0dd2a292b
 9. https://www.digikey.com/en/maker/projects/tensorflow-lite-tutorial-part-3-speech-recognition-on-raspberry-pi/8a2dc7d8a9a947b4a953d37d3b271c71
 10. https://www.digikey.com/en/maker/projects/case-from-the-newly-released-tinyml-cookbook/4c591cef67884f6e8000e1376dd0125f
+11. https://docs.arduino.cc/resources/datasheets/ABX00031-datasheet.pdf
+12. https://www.sparkfun.com/products/21251
+13. https://docs.arduino.cc/tutorials/nano-33-ble-sense-rev2/get-started-with-machine-learning
+14. https://colab.research.google.com/github/arduino/ArduinoTensorFlowLiteTutorials/blob/master/GestureToEmoji/arduino_tinyml_workshop.ipynb
 
 
