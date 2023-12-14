@@ -86,16 +86,60 @@ Se puede comprender mejor el modelo explorando la aplicación tal y como se mues
 
 ![neutron2](neutron_menu2.png)
 
+A continuación, usando las diapositivas de la clase ([link](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/blob/main/00_Curse_Folder/2_Applications_Deploy/Class_18/IESTI01_TinyML_class_18.pdf)) del Prof. Marcelo Rovai, se muestra con mas detalle el resumen completo del proceso anteriormente realizado:
+
+![resumen_modelo2](resumen_ejercicio.png)
+
+Recordemos, que el resultado principal es la matriz de asociada al modelo tal y como se muestra en la siguiente figura:
+
+![resumen_modelo2](resumen_ejercicio2.png)
+
 En la siguiente figura tomada del siguiente [link](https://medium.com/swlh/icon-classifier-with-tflite-model-maker-9263c0021f72) se resume el proceso de trabajo realizado anteriormente:
 
 ![summary](summary.png)
-
 
 ## Parte 2 - Descarge del modelo en la placa de desarrollo
 
 En esta parte lo que se va a realizar es seguir el tutorial **Intro to TinyML Part 2: Deploying a TensorFlow Lite Model to Arduino** ([link](https://www.digikey.com/en/maker/projects/intro-to-tinyml-part-2-deploying-a-tensorflow-lite-model-to-arduino/59bf2d67256f4b40900a3fa670c14330)) adaptando las partes que sean necesarias con el fin de que se ejecute este modelo en el Arduino Nano 33 Sense Lite ([informacion importante](https://forum.arduino.cc/t/a-difference-between-a-n-33-ble-sense-vs-sense-lite/1030305)).
 
 Antes de empezar es importante aclara que el ejemplo en el tutorial se realizo empleando las librerias de tensorflow **Arduino_TensorFlowLite**, sin embargo, estas ya no se encuentran en el repo oficial por que se actualizaron. Sin embargo, si lo que se desea es correr el ejemplo aqui dado, estas se pueden se encuentran a continuación [Arduino_TensorFlowLite-1.15.0-ALPHA.zip](Arduino_TensorFlowLite-1.15.0-ALPHA.zip). 
+
+Para entender como llevar a cabo la implementación de este código en la placa de desarrollo, se recomienda que revise la clase 18 del curso **TinyML - Machine Learning for Embedding Devices** [[link]](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1): 
+
+|Clase|Tema|Slides|Doc|Video|Repo|Code|
+|---|---|---|---|---|---|---|
+|Class 18|TFLite-Micro Overview & Hello World Code Walkthrough|[S](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/blob/main/00_Curse_Folder/2_Applications_Deploy/Class_18/IESTI01_TinyML_class_18.pdf)|[D](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_18/docs)|[V](https://www.youtube.com/watch?v=GPZ9FeGfizE&feature=youtu.be)|[R](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_18)|[C](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_18/hello_world_V2)|
+
+Tenga en cuenta la siguiente referencia.
+
+> **Referencia principal**: En el curso **TinyML - Machine Learning for Embedding Devices** ([UNIFEI-IESTI01-TinyML-2022.1](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1)) de la Universidad [UNIFEI](https://unifei.edu.br/) se encuentra material de excelente calidad.
+
+El objetivo de esta parte es descargar y poner a ejecutar el modelo aprendido en la Arduino Nano de tal manera que este pueda hacer las inferencias necesarias para generar la función seno a partir del modelo resultante. La siguiente figura resume los componentes del modelo:
+
+![hello_world_model](hello_world_model.png)
+
+### Prerequisitos
+
+Antes de empezar se bebe agregar la board.
+
+#### Agregar la board
+
+Abrir el Board Manager a traves del menu desplegable Boards (Tools → Board → Boards Manager)
+
+Colocar aqui la parte de inicialización...
+
+
+* https://github.com/tinyMLx/courseware/blob/master/edX/readings/4-2-5.pdf
+* https://github.com/tinyMLx/courseware/blob/master/edX/readings/4-2-10.pdf
+* https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_16
+* https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/blob/main/00_Curse_Folder/2_Applications_Deploy/Class_16/TFLite-Micro-Hello-World/train_TFL_Micro_hello_world_model.ipynb
+* https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy
+* https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_18/hello_world_V2
+* https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_20
+* https://www.youtube.com/watch?v=GPZ9FeGfizE
+* https://wesmckinney.com/book/
+* https://github.com/ajaymache/machine-learning-yearning/blob/master/full%20book/machine-learning-yearning.pdf
+* https://arxiv.org/pdf/2010.08678.pdf
 
 
 
