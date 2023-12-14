@@ -33,7 +33,13 @@ Veamos cada parte del procedimiento.
 
 ### Requerimientos
 
-Para realizar el desarrollo de manera local se siguió el tutorial **Getting Started with Machine Learning Using TensorFlow and Keras** ([link](https://www.digikey.com/en/maker/projects/getting-started-with-machine-learning-using-tensorflow-and-keras/0746640deea84313998f5f95c8206e5b))
+Para realizar el desarrollo de manera local se siguió el tutorial **Getting Started with Machine Learning Using TensorFlow and Keras** ([link](https://www.digikey.com/en/maker/projects/getting-started-with-machine-learning-using-tensorflow-and-keras/0746640deea84313998f5f95c8206e5b)). La instalación se hizo sin soporte para gpu pues nuestra maquina es una peye.
+
+El notebook ejemplo tomado de la referencia guia es [test.ipynb](test.ipynb). Los resultados son algo similares a los esperados por lo que ahora asumiremos que dió.
+
+
+
+
 
 > **Importante**: While you can play around with various machine learning algorithms in Colab, you’re limited in VM resources and time. If you don’t engage with the interface for 90 min, you will be disconnected, and every 12 hours, the runtime will reset.
 
