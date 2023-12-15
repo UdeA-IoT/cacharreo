@@ -14,11 +14,6 @@ Para usar el modelo, es necerario incluirlo (wrap) en un código que configure p
 ![3](0.png)
 
 
-In this chapter, we will build an embedded application that uses our sine model to
-create a tiny light show. We’ll set up a continuous loop that feeds an x value into the
-model, runs inference, and uses the result to switch an LED on and off, or to control
-an animation if our device has an LCD display.
-
 A continuación se describirá el procedimiento para desarrollar una aplicación embebida que usa el modelo (funcion seno en nuestro caso) para controlar la intensidad del brillo de un led de acuerdo a la señal seno generada por el modelo.
 
 ## Hardware
@@ -333,7 +328,8 @@ Es importante agregar que para propositos de debug se emplearon otras instruccio
 3. https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_16
 4. https://github.com/arduino/ArduinoTensorFlowLiteTutorials?tab=readme-ov-file
 5. https://github.com/TexasInstruments
-6. 
+6. https://www.digikey.com/en/schemeit/home
+7. https://www.digikey.com/en/maker/projects/3d-printed-case-for-adafruit-feather/4444887013384a21b84f464a79441139
 
 
 Fritzing parts: https://forum.fritzing.org/t/arduino-nano-rp2040-parts/12996/5
