@@ -166,6 +166,16 @@ En esta parte lo que vamos a realizar es tratar de explicar (de la mejor manera 
 
 ## Pruebas
 
+### Conexiones
+
+Esquematico
+
+![sch](hello_world_v1_sch.png)
+
+Conexiones
+
+![bb](hello_world_v1_bb.png)
+
 1. ss
 
 ```ino
