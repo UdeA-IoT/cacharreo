@@ -46,6 +46,12 @@ Con los elementos de hardware listos, se procede a desarrollar el software. En e
 * Inicializar (setup)
 * Programa principal (loop)
 
+El programa completo se encuentra en el directorio: [nano_33_ble_tflite_sine](nano_33_ble_tflite_sine/) y tiene los siguientes doe archivos:
+* [sine_model.h](nano_33_ble_tflite_sine/sine_model.h): Matriz con el modelo entrenado usando Tensor Flow Lite.
+* [nano_33_ble_tflite_sine.ino](nano_33_ble_tflite_sine/nano_33_ble_tflite_sine.ino): Programa que se ejecutará en el microcontrolador para cambiar el brillo del led de acuerdo a la salida de la funcion seno aprendida por el modelo.
+
+A continuación se abordarán las principales partes del código [nano_33_ble_tflite_sine.ino](nano_33_ble_tflite_sine/nano_33_ble_tflite_sine.ino).
+
 ### Incluir dependencias
 
 Se resume en dos pasos principales:
@@ -124,9 +130,115 @@ En esta parte, se definen las variables globales de la aplicación. Para el ejem
      
    En estas lineas lo que se hace es definir la **Tensor Arena**. Esta es un area de memoria que se asocia al modelo para que este pueda ejecutarse. El tamaño no tiene que ser exacto y como no se tiene certeza de que tanto se necesita, este se define a ensayo y error teniendo en cuenta de respetar las limitaciones de memoria del microcontrolador. Un tip es elegir el tamaño de la forma $n\times 1024$, comenzando por un valor alto como punto de partida para que el modelo funcione y luego bajandolo hasta que el modelo no ejecute. El ultimo numero menor para el cual el modelo funcionó el tamaño correspondiente de la **Tensor Arena**.
 
+El código que comprende las dos partes tratadas anteriormente se muestra a continuación:
+
+```c++
+// Import TensorFlow stuff
+#include <TensorFlowLite.h>
+
+#include "tensorflow/lite/micro/all_ops_resolver.h"
+#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/micro_interpreter.h"
+#include "tensorflow/lite/schema/schema_generated.h"
+
+#include "tensorflow/lite/c/common.h"
+#include "tensorflow/lite/version.h"
+
+// Our model
+#include "sine_model.h"
+
+
+// Figure out what's going on in our model
+#define DEBUG 1
+
+
+// Some settings
+constexpr int led_pin = 2;
+constexpr float pi = 3.14159265;                  // Some pi
+constexpr float freq = 0.5;                       // Frequency (Hz) of sinewave
+constexpr float period = (1 / freq) * (1000000);  // Period (microseconds)
+
+// TFLite globals, used for compatibility with Arduino-style sketches
+namespace {
+  tflite::ErrorReporter* error_reporter = nullptr;
+  const tflite::Model* model = nullptr;
+  tflite::MicroInterpreter* interpreter = nullptr;
+  TfLiteTensor* model_input = nullptr;
+  TfLiteTensor* model_output = nullptr;
+
+  // Create an area of memory to use for input, output, and other TensorFlow
+  // arrays. You'll need to adjust this by combiling, running, and looking
+  // for errors.
+  constexpr int kTensorArenaSize = 5*1024;
+  uint8_t tensor_arena[kTensorArenaSize];
+} // namespace
+```
+
 ### Inicialización
 
 Esta parte esta asociada al codigo que se coloca en la función de inicialización (```setup()```):
+
+
+```c++
+void setup() {
+  
+  // Wait for Serial to connect
+  #if DEBUG
+    while(!Serial);  
+  #endif
+
+  // Let's make an LED vary in brightness
+  pinMode(led_pin, OUTPUT);
+
+  // Set up logging (will report to Serial, even within TFLite functions)
+  static tflite::MicroErrorReporter micro_error_reporter;
+  error_reporter = &micro_error_reporter;
+
+  // Map the model into a usable data structure
+  model = tflite::GetModel(sine_model);
+  if (model->version() != TFLITE_SCHEMA_VERSION) {
+    TF_LITE_REPORT_ERROR(error_reporter,
+                         "Model provided is schema version %d not equal "
+                         "to supported version %d.",
+                         model->version(), TFLITE_SCHEMA_VERSION);
+    return;
+  }
+
+  // This pulls in all the operation implementations we need.
+  // NOLINTNEXTLINE(runtime-global-variables)
+  static tflite::AllOpsResolver resolver;
+
+  // Build an interpreter to run the model with.
+  static tflite::MicroInterpreter static_interpreter(
+      model, resolver, tensor_arena, kTensorArenaSize, error_reporter);
+  interpreter = &static_interpreter;
+
+   // Allocate memory from the tensor_arena for the model's tensors.
+  TfLiteStatus allocate_status = interpreter->AllocateTensors();
+  if (allocate_status != kTfLiteOk) {
+    TF_LITE_REPORT_ERROR(error_reporter, "AllocateTensors() failed");
+    return;
+  }
+
+  // Obtain pointers to the model's input and output tensors.
+  model_input = interpreter->input(0);
+  model_output = interpreter->output(0);
+
+  #if DEBUG
+    Serial.print("Number of dimensions: ");
+    Serial.println(model_input->dims->size);
+    Serial.print("Dim 1 size: ");
+    Serial.println(model_input->dims->data[0]);
+    Serial.print("Dim 2 size: ");
+    Serial.println(model_input->dims->data[1]);
+    Serial.print("Input type: ");
+    Serial.println(model_input->type);
+  #endif
+}
+```
+
+A continuación, se habla brevemente de las principales partes del código anteriormente mostrado:
+
 1. **Inicialización de los modulos del microcontrolador**: En está parte se configuran los modulos del microcontrolador asi como los puertos de entrada y salida. Para el caso solo se hizo enfasis en la inicialización del puerto que se conectará al LED:
    
    
@@ -316,7 +428,102 @@ Es importante agregar que para propositos de debug se emplearon otras instruccio
 
 ## Pruebas
 
+Las pruebas realizadas a continuación tratan de documentar las pruebas realizadas en el video **Introducción a TinyML Parte 2: Implementación de un modelo TensorFlow Lite en Arduino | Electrónica Digi-Key** ([link](https://www.youtube.com/watch?v=dU01M61RW8s)) del autor de la guia que se tomo como base de esta.
 
+### Prueba 1
+
+Con el debug activado (```#define DEBUG 1```) se agrego al final de la función ```loop()``` un delay de 1 segundo y se observo la salida:
+
+![test_1](output_debug_test_delay.png)
+
+### Prueba 2
+
+Se probaron diversos tamaños para la región **Tensor Arena**. La siguiente tabla resume los resultados:
+
+|Test|Tensor Arena|Linea de codigo modificada|Resultado|
+|---|---|---|---|
+|1|$5\times1024$|```constexpr int kTensorArenaSize = 5 * 1024;```|Funciono bien|
+|2|$1\times1024$|```constexpr int kTensorArenaSize = 1 * 1024;```|Funciono bien|
+|3|$512$|```constexpr int kTensorArenaSize = 512;```|Saco error|
+
+La salida para los casos en que funciona el codigo es similar, en la siguiente figura se muestra el caso para un tamaño de 1024:
+
+![size_1024](debug_size_1024.png)
+
+Para el ultimo caso probado, el debug que viene con Tensor Flow Lite saco un error haciendo que el programa dejara de correr. A continuación se muestra la salida:
+
+![size_512](debug_size_512_2.png)
+
+La conclusión es que para este modelo, el minimo tamaño a usar para la Tensor Arena es de ```1024```.
+
+### Prueba 3
+
+En esta prueba se evaluaron valores constantes a la entrada entrada con el fin de verificar que el modelo si estaba realizando inferencias correctamente. La comparación se realizo contrastando el valor que se despliega desplegado en la terminal serial con el valor ingresado en radianes en la calculadora:
+
+![calculadora](test_valores.png)
+
+La siguiente tabla muestra los valores:
+
+|Test|Valor ingresado|Linea de codigo modificada|Valor calculadora|Valor modelo|
+|---|---|---|---|---|
+|1|```1.2```|```model_input->data.f[0] = 1.2;```|```0.93204```|```0.90```|
+|2|```pi```|```model_input->data.f[0] = pi;```|```0```|```-0.02```|
+
+Las siguientes figuras muestran la salida serial para cada caso:
+
+* **Test 1**: ```1.2```
+  
+  ![v1](output_debug_test_value1.png)
+
+* **Test 1**: ```pi```
+  
+  ![v2](hello_world_v2_sch.png)
+
+### Prueba 4
+
+Una vez que se ha comprobado que el modelo parece predecir correctamente, el siguiente paso cosiste en adaptarlo de tal manera que sea alimentado con valores de entrada dentro del rango $[0,2\pi]$ para esto lo que se hace es modificar la siguiente de entrada de datos al modelo para que esta quede así:
+
+```c++
+model_input->data.f[0] = x_val;
+```
+
+La siguiente es la salida con el debug activado:
+
+![v3](hello_world_v3_sch.png)
+
+### Prueba 5
+
+Como parece que la salida serial esta variando conforme a lo esperado ya no es necesario realizar el debug, por lo que este se desactiva (```#define DEBUG 0```); asi mismo, se puede eliminar o comentar la linea que genera el delay de 1 seg. pues lo que interesa es ya generar la señal en tiempo real para poner a variar el brillo del led. 
+
+Despues de hacer esto, la salida en el monitor serial será similar a la mostrada a continuación:
+
+![salida](output_debug_off.png)
+
+En esta prueba la frecuencia para la señal seno esta en 0.5 Hz:
+
+```ino
+...
+constexpr float freq = 0.5;       // Frequency (Hz) of sinewave 
+...
+```
+
+Si todo esta bien, los valores mostrados variaran aproximadamente entre -1 y 1 y se verá un cambio del brillo en el LED a una frecuencia aproximada de 0.5 Hz (o 2 seg. de periodo). La grafica de la salida se muestra a continuación:
+
+![test_2s](sin_2s.png)
+
+### Prueba 6
+
+Se cambio la frecuencia de la señal a 100 Hz y se observo la forma de onda generada.
+
+```ino
+...
+constexpr float freq = 0.5;       // Frequency (Hz) of sinewave 
+...
+```
+
+A continuación se muestra la salida:
+
+![test_100Hz](sin_100Hz.png)
 
 
 ## Referencias
@@ -328,7 +535,4 @@ Es importante agregar que para propositos de debug se emplearon otras instruccio
 5. https://github.com/TexasInstruments
 6. https://www.digikey.com/en/schemeit/home
 7. https://www.digikey.com/en/maker/projects/3d-printed-case-for-adafruit-feather/4444887013384a21b84f464a79441139
-
-
-Fritzing parts: https://forum.fritzing.org/t/arduino-nano-rp2040-parts/12996/5
 
