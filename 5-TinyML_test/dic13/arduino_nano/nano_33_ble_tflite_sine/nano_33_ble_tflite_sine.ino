@@ -14,13 +14,13 @@
 
 
 // Figure out what's going on in our model
-#define DEBUG 0
+#define DEBUG 1
 
 
 // Some settings
 constexpr int led_pin = 2;
 constexpr float pi = 3.14159265;                  // Some pi
-constexpr float freq = 100;                       // Frequency (Hz) of sinewave
+constexpr float freq = 0.5;                       // Frequency (Hz) of sinewave
 constexpr float period = (1 / freq) * (1000000);  // Period (microseconds)
 
 // TFLite globals, used for compatibility with Arduino-style sketches
@@ -30,12 +30,11 @@ namespace {
   tflite::MicroInterpreter* interpreter = nullptr;
   TfLiteTensor* model_input = nullptr;
   TfLiteTensor* model_output = nullptr;
-  int inference_count = 0;
 
   // Create an area of memory to use for input, output, and other TensorFlow
   // arrays. You'll need to adjust this by combiling, running, and looking
   // for errors.
-  constexpr int kTensorArenaSize = 5 * 1024;
+  constexpr int kTensorArenaSize = 5*1024;
   uint8_t tensor_arena[kTensorArenaSize];
 } // namespace
 
@@ -83,9 +82,6 @@ void setup() {
   model_input = interpreter->input(0);
   model_output = interpreter->output(0);
 
-  // Keep track of how many inferences we have performed.
-  inference_count = 0;
-
   #if DEBUG
     Serial.print("Number of dimensions: ");
     Serial.println(model_input->dims->size);
@@ -111,9 +107,10 @@ void loop() {
   // Calculate x value to feed to the model
   float x_val = ((float)timestamp * 2 * pi) / period;
 
-  // Copy value to input buffer (tensor)
-  model_input->data.f[0] = x_val;
+  // Copy value to input buffer (tensor)  
+  // model_input->data.f[0] = 1.2;
   // model_input->data.f[0] = pi;
+  model_input->data.f[0] = x_val;
 
   // Run inference, and report any error
   TfLiteStatus invoke_status = interpreter->Invoke();
@@ -137,4 +134,6 @@ void loop() {
     Serial.print("Time for inference (us): ");
     Serial.println(micros() - start_timestamp);
   #endif
+
+  //delay(1000);
 }
