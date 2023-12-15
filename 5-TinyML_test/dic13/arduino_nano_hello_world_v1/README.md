@@ -59,7 +59,7 @@ Se resume en dos pasos principales:
 
 1. Incluir los encabezados de TensorFlow Lite for Microcontrollers:
 
-    ```ino
+    ```c++
     // Tensor Flow Lite Headers
     #include <TensorFlowLite.h>
     
@@ -76,7 +76,7 @@ Se resume en dos pasos principales:
 2. Incluir el encabezado del modelo:
 
     
-    ```ino
+    ```c++
     ...
     // Our model
     #include "sine_model.h"
@@ -88,7 +88,7 @@ Se resume en dos pasos principales:
 En esta parte, ee definen las variables globales de la aplicación. Para el ejemplo se tienen:
 1. Variables globales asociadas a la aplicación en cuestión:
   
-   ```ino
+   ```c++
    ...
    // Some settings
    constexpr int led_pin = 2;
@@ -100,7 +100,7 @@ En esta parte, ee definen las variables globales de la aplicación. Para el ejem
   
 2. Apuntadores a estructuras de datos y clases propias de Tensor Flow Lite:
 
-   ```ino
+   ```c++
    ...
    // TFLite globals, used for compatibility with Arduino-style sketches
    namespace {
@@ -121,7 +121,7 @@ En esta parte, ee definen las variables globales de la aplicación. Para el ejem
 
    En la parte anterior, hay dos lineas de código muy importantes las cuales son:
 
-   ```ino
+   ```c++
    ...
    constexpr int kTensorArenaSize = 5 * 1024;
    uint8_t tensor_arena[kTensorArenaSize];
@@ -136,7 +136,7 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
 1. **Inicialización de los modulos del microcontrolador**: En está parte se configuran los modulos del microcontrolador asi como los puertos de entrada y salida. Para el caso solo se hizo enfasis en la inicialización del puerto que se conectará al LED:
    
    
-   ```ino
+   ```c++
    ...
    // Let's make an LED vary in brightness
    pinMode(led_pin, OUTPUT);
@@ -146,7 +146,7 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
 2. **Configurar un registro para logging**: Cuando se desarrolla una aplicación para una placa de desarrollo, una de las cosas mas importantes es el proceso de debugging. Normalmente, este procedimiento se desarrolla imprimiendo mensajes haciendo uso de la interfaz serial. Tensor Flow Lite posee diferentes funciones y clases para facilitar esta tarea. Para esto, lo que se suele hacer es usar una instancia de la clase MicroErrorReporter definida en [micro_error_reporter.h](https://github.com/biagiom/tflite-micro-lib/blob/master/tensorflow/lite/core/api/error_reporter.h). 
    
 
-   ```ino
+   ```c++
    ...
    // Set up logging (will report to Serial, even within TFLite functions)
    static tflite::MicroErrorReporter micro_error_reporter;
@@ -157,7 +157,7 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
 3. **Mapear el modelo**: En esta parte lo que se hace es tomar el matriz asociada al modelo (definida en el archivo [sine_model.h](./nano_33_ble_tflite_sine/sine_model.h)) y pasarla mediante el metodo ```GetModel()``` el cual retorna un puntero (a una estructura ```Model``` definida en [schema_generated.h](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/schema/schema_generated.h)) con la representación del modelo.
 
 
-   ```ino
+   ```c++
    ...
    // Map the model into a usable data structure
    model = tflite::GetModel(sine_model);
@@ -166,7 +166,7 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
 
 4. Creación de un **```AllOpsResolver```**: El siguiente paso es la creación de una instancia de la clase ```AllOpsResolver``` (**Duda**: Parece que cambio en la implementación nueva. Ver siguiente [link](https://github.com/arduino/ArduinoTensorFlowLiteTutorials/issues/15)). Esta clase permite al interprete de Tensor Flow Lite for microcontrolers acceder a todas las *operaciones* de machine learning (llevadas a cabo para realizar la transformación de las entradas en salidas) ejecutadas por el modelo.  
   
-   ```ino
+   ```c++
    ...
    // This pulls in all the operation implementations we need.
    // NOLINTNEXTLINE(runtime-global-variables)
@@ -176,7 +176,7 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
 
 5. **Inicializar el interprete**: En esta parte se crea un objeto de la clase ```MicroInterpreter```. Esta clase es el corazon de TensorFlow Lite for Microcontrollers y constituye la pieza magica de codigo que ejecutará el modelo con los datos que se le pasen. Como se puede ver, al microinterprete se le pasan la mayoria de todos los objetos que se han creado: 
       
-   ```ino
+   ```c++
    ...
    // Build an interpreter to run the model with.
    static tflite::MicroInterpreter static_interpreter(
@@ -187,7 +187,7 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
    
    Posteriormente, posteriormente el microinterprete hace una llamada al método ```AllocateTensors()```. Este metodo recorre todos los tensores definidos por el modelo y asigna, a cada uno de ellos, memoria en el **Tensor Arena**. Es fundamental llamar ```AllocateTensors()``` antes de intentar ejecutar la inferencia, porque de lo contrario la inferencia fallará.
 
-   ```ino
+   ```c++
    ...
    // Allocate memory from the tensor_arena for the model's tensors.
    TfLiteStatus allocate_status = interpreter->AllocateTensors();
@@ -200,7 +200,7 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
 
 6. **Definir entradas y salidas del modelo**: 
 
-   ```ino
+   ```c++
    ...
    // Obtain pointers to the model's input and output tensors.
    model_input = interpreter->input(0);
@@ -211,65 +211,122 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
 
 ### Main loop
 
+Una vez las variables necesarias han sido inicializadas se procede a la implementación de la funcion ```loop()```. A continuación se muestra la implementación realizada:
 
-As discussed earlier, the program we’re building consists of a continuous loop that
-feeds an x value into the model, runs inference, and uses the result to produce some
-sort of visible output (like a pattern of flashing LEDs), depending on the platform.
-Because the application is complex and spans multiple files, let’s take a look at its
-structure and how it all fits together.
+```c++
+void loop() {
+  // put your main code here, to run repeatedly:
+  #if DEBUG
+    unsigned long start_timestamp = micros();
+  #endif
 
+  // Get current timestamp and modulo with period
+  unsigned long timestamp = micros();
+  timestamp = timestamp % (unsigned long)period;
 
+  // Calculate x value to feed to the model
+  float x_val = ((float)timestamp * 2 * pi) / period;
 
-Once all variables are set up, we can implement the loop() function to execute
-the actual operation. In this loop, we read the potentiometer value from pin A0.
-Similar to the baseline code, it calculates an average of 20 successive readings to get
-a stable value. The value is mapped between 0 and 1 and is copied to the model’s
-input tensor. Next, we run MicroInterpreter ->Invoke() to make the inference. The
-output is obtained from the output tensor. Since the model output is ranged between
-0 and 1, the value is multiplied by 255 and then applied to the LED pin to control the
-brightness. The whole code inside loop() is as follows:
+  // Copy value to input buffer (tensor)  
+  model_input->data.f[0] = x_val;
 
+  // Run inference, and report any error
+  TfLiteStatus invoke_status = interpreter->Invoke();
+  if (invoke_status != kTfLiteOk) {
+    TF_LITE_REPORT_ERROR(error_reporter, "Invoke failed on x: %f\n",
+                         static_cast<double>(x_val));
+    return;
+  }
 
+  // Read predicted y value from output buffer (tensor)
+  float y_val = model_output->data.f[0];
 
-(**En construcción...**) En el Loop principal lo que se hace es:
-1. Usar el modelo para hacer la prediccion.
-2. Imprimir los valores inferidos por serial.
-3. Cambiar la intensidad del led.
+  // Translate to a PWM LED brightness
+  int brightness = (int)(255 * y_val);
+  analogWrite(led_pin, brightness);
 
+  // Print value
+  Serial.println(y_val);
+
+  #if DEBUG
+    Serial.print("Time for inference (us): ");
+    Serial.println(micros() - start_timestamp);
+  #endif
+}
+```
+
+En esta basicamente, la logica principal implementada fue basicamente lo siguiente:
+1. Generar valores temporales en la variable ```timestamp``` ($t$) entre 0 y el perido: $0 \le t \le T$.
+   
+   ```c++
+   ...
+   // Get current timestamp and modulo with period
+   unsigned long timestamp = micros();
+   timestamp = timestamp % (unsigned long)period;   
+   ...
+   ```
+
+2. Generar los valores de la variable ```x_val``` tal que $0 \le x_{val} \le 2\pi$.
+
+   ```c++
+   ...
+   // Calculate x value to feed to the model
+   float x_val = ((float)timestamp * 2 * pi) / period;
+   ...   
+   ```
+
+3. Copiar el valor generado en el tensor de entrada.
+   
+   ```c++
+   ...
+   // Copy value to input buffer (tensor)  
+   model_input->data.f[0] = x_val;
+   ...
+   ```
+
+4. Generar la inferencia y copiar el valor inferido por el modelo, basicamente: $y_{val}=\sin(x_{val})$
+
+   ```c++
+   ...
+   // Run inference, and report any error
+   TfLiteStatus invoke_status = interpreter->Invoke();
+   if (invoke_status != kTfLiteOk) {
+     error_reporter->Report("Invoke failed on x_val: %f\n",
+                            static_cast<double>(x_val));
+     return;
+   }
+   // Read predicted y value from output buffer (tensor)
+   float y_val = model_output->data.f[0];
+   ...
+   ```
+
+5. Reescalar los resultados de la salida $y_{val}\in[-1,1]$ a un variable entera ```brightness``` dentro del rango $[-255,255]$. Luego, mediante la función ```analogWrite()``` modificar la intensidad del led.
+
+   ```c++
+   ...
+   // Translate to a PWM LED brightness
+   int brightness = (int)(255 * y_val);
+   analogWrite(led_pin, brightness);
+   ...
+   ```
+
+6. Imprimir el valor de la salida ```y_val``` del modelo serialmente. 
+
+   ```c++
+   ...
+   // Print value
+   Serial.println(y_val);
+   ...
+   ```
+
+Es importante agregar que para propositos de debug se emplearon otras instrucciones las cuales no se describieron con detalle anteriormente.
 
 ## Pruebas
 
-### Conexiones
 
-Esquematico
 
-![sch](hello_world_v1_sch.png)
 
-Conexiones
-
-![bb](hello_world_v1_bb.png)
-
-1. ss
-
-```ino
-...
-// Some settings
-constexpr int led_pin = 2;
-constexpr float pi = 3.14159265;                  // Some pi
-constexpr float freq = 0.5;                       // Frequency (Hz) of sinewave
-constexpr float period = (1 / freq) * (1000000);  // Period (microseconds)
-...
-```
-2. Tensor arena
-
-```ino
-constexpr int kTensorArenaSize = 2 * 1024;
-
-```
-
-![](test_arena.png)
-
----
+## Referencias
 
 1. https://www.tensorflow.org/lite/microcontrollers/get_started_low_level?hl=es-419#run_inference
 2. https://www.digikey.com/en/maker/projects/intro-to-tinyml-part-2-deploying-a-tensorflow-lite-model-to-arduino/59bf2d67256f4b40900a3fa670c14330
