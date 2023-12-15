@@ -46,9 +46,7 @@ Con los elementos de hardware listos, se procede a desarrollar el software. En e
 * Inicializar (setup)
 * Programa principal (loop)
 
-
-
-## Incluir dependencias
+### Incluir dependencias
 
 Se resume en dos pasos principales:
 
@@ -78,9 +76,10 @@ Se resume en dos pasos principales:
     ...
     ```
 
-## Variables globales
+### Variables globales
 
-En esta parte, ee definen las variables globales de la aplicación. Para el ejemplo se tienen:
+En esta parte, se definen las variables globales de la aplicación. Para el ejemplo se tienen:
+
 1. Variables globales asociadas a la aplicación en cuestión:
   
    ```c++
@@ -125,7 +124,7 @@ En esta parte, ee definen las variables globales de la aplicación. Para el ejem
      
    En estas lineas lo que se hace es definir la **Tensor Arena**. Esta es un area de memoria que se asocia al modelo para que este pueda ejecutarse. El tamaño no tiene que ser exacto y como no se tiene certeza de que tanto se necesita, este se define a ensayo y error teniendo en cuenta de respetar las limitaciones de memoria del microcontrolador. Un tip es elegir el tamaño de la forma $n\times 1024$, comenzando por un valor alto como punto de partida para que el modelo funcione y luego bajandolo hasta que el modelo no ejecute. El ultimo numero menor para el cual el modelo funcionó el tamaño correspondiente de la **Tensor Arena**.
 
-## Inicialización
+### Inicialización
 
 Esta parte esta asociada al codigo que se coloca en la función de inicialización (```setup()```):
 1. **Inicialización de los modulos del microcontrolador**: En está parte se configuran los modulos del microcontrolador asi como los puertos de entrada y salida. Para el caso solo se hizo enfasis en la inicialización del puerto que se conectará al LED:
@@ -202,7 +201,6 @@ Esta parte esta asociada al codigo que se coloca en la función de inicializaci�
    model_output = interpreter->output(0);
    ...
    ```
-
 
 ### Main loop
 
