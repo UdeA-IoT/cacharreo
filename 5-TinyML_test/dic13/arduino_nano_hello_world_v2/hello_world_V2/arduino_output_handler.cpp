@@ -43,5 +43,6 @@ void HandleOutput(tflite::ErrorReporter* error_reporter, float x_value,
   analogWrite(led, brightness);
 
   // Log the current brightness value for display in the Arduino plotter
-  TF_LITE_REPORT_ERROR(error_reporter, "%d\n", brightness);
+  // TF_LITE_REPORT_ERROR(error_reporter, "%d\n", brightness);
+  TF_LITE_REPORT_ERROR(error_reporter, "sen(%f) = %f -> %d", x_value, y_value, brightness);
 }
