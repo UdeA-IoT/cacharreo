@@ -4,6 +4,12 @@
 Las referencias se toman de: https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_18
 
 
+|Clase|Tema|Slides|Doc|Video|Repo|Code|
+|---|---|---|---|---|---|---|
+|Class 18|TFLite-Micro Overview & Hello World Code Walkthrough|[S](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/blob/main/00_Curse_Folder/2_Applications_Deploy/Class_18/IESTI01_TinyML_class_18.pdf)|[D](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_18/docs)|[V](https://www.youtube.com/watch?v=GPZ9FeGfizE&feature=youtu.be)|[R](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_18)|[C](https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML-2022.1/tree/main/00_Curse_Folder/2_Applications_Deploy/Class_18/hello_world_V2)|
+
+
+
 ## Referencias
 
 1. https://github.com/TexasInstruments/
