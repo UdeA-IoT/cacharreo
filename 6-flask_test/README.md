@@ -122,7 +122,6 @@ def home():
 def orders(user_name, order_id):
     return f'<p>Fetching order #{order_id} for {user_name}.</p>'
 ```
-
 ## Referencias
 
 1. https://blog.adafruit.com/2017/07/07/create-a-basic-python-web-server-with-flask-piday-raspberrypi-raspberry_pi/
