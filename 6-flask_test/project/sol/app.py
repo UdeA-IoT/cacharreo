@@ -16,5 +16,10 @@ def index():
             </ul>
           """
 
+@app.route('/animals')
+def animals():
+  html = "<h1>List of pets</h1>"
+  return html
+
 if __name__ == '__main__':
     app.run()
