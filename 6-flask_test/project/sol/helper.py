@@ -12,7 +12,7 @@ pets = {
             'age': 4,
             'breed': 'Border Collie',
             'description': 'Eager and curious, Shadow enjoys company and can always be found tagging along at your heels!',
-            'url': 'https://content.codecademy.com/programs/flask/introduction-to-flask/dog-shadow.jpeg'
+            'url': 'static/images/dog-shadow.jpeg'
         }
     ],
     'cats': [
@@ -21,7 +21,7 @@ pets = {
             'age': 1,
             'breed': 'Tabby',
             'description': 'Snowflake is a playful kitten who loves roaming the house and exploring.',
-            'url': 'https://content.codecademy.com/programs/flask/introduction-to-flask/cat-snowflake.jpeg'
+            'url': 'static/images/cat-snowflake.jpeg'
         }
     ],
     'rabbits': [
@@ -30,7 +30,7 @@ pets = {
             'age': 4,
             'breed': 'Mini Rex',
             'description': 'Easter is a sweet, gentle rabbit who likes spending most of the day sleeping.',
-            'url': 'https://content.codecademy.com/programs/flask/introduction-to-flask/rabbit-easter.jpeg'
+            'url': 'static/images/rabbit-easter.jpeg'
         }
     ]
 }
