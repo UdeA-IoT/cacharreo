@@ -10,9 +10,9 @@ def index():
             <p>Browse through the links below to find
             your new furry friend:</p>
             <ul>
-              <li> Dogs
-              <li> Cats
-              <li> Rabbits
+              <li> <a href="/animals/dogs"> Dogs </a>
+              <li> <a href="/animals/cats"> Cats </a>
+              <li> <a href="/animals/rabbits"> Rabbits </a>
             </ul>
           """
 
