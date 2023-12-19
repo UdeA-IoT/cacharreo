@@ -16,9 +16,9 @@ def index():
             </ul>
           """
 
-@app.route('/animals')
-def animals():
-  html = "<h1>List of pets</h1>"
+@app.route('/animals/<pet_type>')
+def animals(pet_type):
+  html = f"<h1>List of {pet_type}</h1>"
   return html
 
 if __name__ == '__main__':
