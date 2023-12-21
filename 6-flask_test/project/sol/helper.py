@@ -5,7 +5,7 @@ pets = {
             'age': 2,
             'breed': 'Dalmatian',
             'description': 'Spot is an energetic puppy who seeks fun and adventure!',
-            'url': 'https://content.codecademy.com/programs/flask/introduction-to-flask/dog-spot.jpeg'
+            'url': 'static/images/dog-spot.jpeg'
         },
         {
             'name': 'Shadow',

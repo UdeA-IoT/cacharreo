@@ -19,12 +19,24 @@ def index():
 
 @app.route('/animals/<pet_type>')
 def animals(pet_type):
+  """
   html = "<h1>List of "+ pet_type +"</h1>\n"
   html += "<ul>\n"
   for pet in pets[pet_type]:
     item = "<li>" + pet['name'] + "\n"
     html += item
   html += "</ul>"
+  return html
+  """
+  html = "<h1>List of " + pet_type + "</h1>\n"
+  html += "<ul>\n"
+  for idx, item in enumerate(pets[pet_type]):
+    link = pets[pet_type][idx]['url']
+    # plain_text += link + " ----- "
+    link = "href=\"" + link + "\""
+    item = "<li> <a " + link + "> " + pets[pet_type][idx]['name'] + " </a> </li>\n"
+    html += item
+  html += "</ul>\n"
   return html
 
 @app.route('/animals/<pet_type>/<int:pet_id>')
