@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Cooking By Myself</h1>
+    <p>Welcome to my cookbook. These are recipes I like.</p>
+    <!-- Implement a for loop using `template_recipes`-->
+    {% for id,name in template_recipes.items() %}
+    <p><a href="/recipe/{{id}}"> {{name}} </a></p>
+    {% endfor %}
+  </body>
+</html>
