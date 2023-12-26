@@ -51,3 +51,80 @@ Good luck and have fun. Let’s get started!!!
    2. Create template variable ```categories``` and assign it the app variable ```categories```
    3. Create template variable ```locations``` and assign it the app variable ```locations```
 
+### Populate the Template
+
+3. With access to the three variables, we can start work on the template. Let’s start with the heading of the page. We will use the ```category``` and ```categories``` variables to display a string for the page heading.
+   
+   Inside the ```<h1>``` tags in **locations.html** insert the ```categories``` dictionary using the ```category``` string as a key. Be sure to use expression delimiters ```{{ }}```.
+   
+   When you are done, if you want to change the heading replace “recommended” at the end of the URL in the browser component with "tovisit" or "visited". These are the 3 category pages we'll be working with in this project.
+
+4. Since we have a heading that tells us what category page we’re on, let’s create an easy way to move from page to page by creating a Navbar.
+   
+   In **locations.html** implement the Navbar:
+   1. Inside the ```<div class="navbar">``` tags create a ```for``` loop that surrounds the ```<a>``` tag
+   2. Iterate through the keys and values of ```categories``` using the ```items()``` object method
+   3. Set the loop variables ```category``` as each key and ```label``` as each value
+   4. Inside the ```for``` loop, set the ```href``` attribute to ```category``` and the text of the link as ```label```
+   
+   **Be sure to**:
+   * Close the for loop
+   * Use statement delimiters ```{% %}``` with the for loops
+   * Use expression delimiters ```{{ }}``` for the standalone variables
+
+5. Great work! You can now move to each category page using the Navbar. Let’s now populate the list of locations in each category using the ```locations``` variable.
+
+   In **locations.html** implement the locations list:
+   1. Inside the ```<tbody class="loctable">``` tags create a for loop that surrounds the ```<tr>``` tags
+   2. Iterate through the objects in ```locations``` and define a loop variable ```location```
+   3. Inside the ```<td class="loc">``` tags insert the ```name``` attribute of the ```location``` object
+   4. Inside the ```<td class="desc">``` tags insert the description attribute of the ```location``` object
+
+   **Be sure to**:
+   * Close the for loop
+   * Use statement delimiters ```{% %}``` with the for loops
+   * Use expression delimiters ```{{ }}```
+
+6. In the web browser component, to the right of each location description is a pair of buttons: one to move the location up one and one to delete the location. In the template these are ```<input type="submit"``` tags which are in the ```<form>``` that is inside the 3rd ```<td>``` tag. We need to add a little more info to the form in order for our application to work.
+   
+   In **locations.html** add the location name to each of the input elements. You can do this by setting the name attribute for each ```<input type="submit"``` in the form to the ```name``` attribute of the ```location``` object.
+
+   **Be sure to**:
+   * Use expression delimiters ```{{ }}```
+
+7. We now have a clear heading to tell us what category page we’re on, a Navbar, a list of locations and buttons to perform actions on our locations. The button functionality is unnecessary for the visited locations, so let’s keep them from appearing on that page.
+
+   In **locations.html** implement an ```if``` statement to only have the Move Up and Delete buttons on the "recommended" and "tovisit" pages:
+   1. Inside the ```<td class="btns">``` tags create an if statement that surrounds the ```<form>``` tags.
+   2. The if condition should check if the ```category``` attribute of the location object is in this list: ```["recommended", "tovisit"]```
+
+   **Be sure to**:
+   * Close the if statement
+   * Use statement delimiters ```{% %}``` with the if statement
+
+8. Now that the first part of the template is finished, let’s use inheritance to complete the template and add some styling to the page.
+
+   In **locations.html** inherit from another template:
+   1. At the top of **locations.html** insert an ```extends``` statement that extends **base.html**
+   2. Now surround the rest of the content in **locations.html** with a ```block``` statement named ```content```
+
+   **Be sure to**:
+   * Surround the filename with quotes
+   * Close the ```block``` statement
+   * Use statement delimiters ```{% %}``` with the extends and block statements.
+
+### Handle the Move Up and Delete Form
+
+9. When the user pushes one of the location form buttons, a request will be sent to the server with ```name``` and ```value``` attributes of the associated ```<input>```. One way to test for a form submission in our application is to test the method attribute of the request object. If the ```method``` is ```"POST"``` we know a form has been submitted.
+    
+    In **app.py** test for a form submission. Inside the ```locations()``` route function replace the ```False``` condition of the ```if``` statement with a check that the ```request``` object's ```method``` attribute equals ```"POST"```
+
+10. Excellent! Now we need to collect the data in order to process it. If you look in the ```locations()``` route function of **app.py** you will see that some of the data processing has been done already. The two things to know about the submitted data are that the ```form``` attribute of the request object is a dictionary and it will only contain one key-value pair within it. Knowing this we can use the ```items()``` method to extract that pair using a single line of code.
+
+    In **app.py** collect the ```name``` and ```value``` data from the submitted form. Replace the ```[(None, None)]``` statement with the output of the ```items()``` method of the ```request``` objects ```form``` attribute.
+
+    When you are done you can test out the functionality by clicking the buttons next to each location. If you delete all the data you can refresh it by running the code again.
+
+
+### Create A Form in Python
+
