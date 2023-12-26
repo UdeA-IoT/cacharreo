@@ -184,26 +184,46 @@ Good luck and have fun. Let’s get started!!!
     **Be sure to**:
     * Use expression delimiters ```{{ }}```
 
+17. For the ```category``` ```RadioField()``` buttons we need to iterate through the variable to insert the button elements
+    
+    In **locations.html** populate the third ```<td>``` column of the second row of the table with the ```RadioField()``` elements:
+    1. Create a for loop inside the third ```<td>``` tag in the second row, making sure to surround the ```<div>``` tags
+    2. Iterate through the ```category``` field using the ```add_location``` template variable and create a loop variable button
+    3. Inside the ```<div>``` tags insert the field using the loop variable ```button```
+    4. On the same line insert the field ```label``` using the loop variable button
 
-For the category RadioField() buttons we need to iterate through the variable to insert the button elements
+    **Be sure to**:
+    * Close the for loop
+    * Use statement delimiters ```{% %}``` with the for loops
+    * Not use parentheses ```()``` when iterating through the ```category``` variable
+    * Use expression delimiters ```{{ }}``` for the standalone variables
 
-In locations.html populate the third <td> column of the second row of the table with the RadioField() elements:
+18. Now let's finish the form with the submit button.
+    
+    In **locations.html** populate the third row with an ```add_location``` button. Insert the ```submit``` field into the single ```<td>``` tag of the third row using the ```add_location``` template variable.
 
-Create a for loop inside the third <td> tag in the second row, making sure to surround the <div> tags
-Iterate through the category field using the add_location template variable and create a loop variable button
-Inside the <div> tags insert the field using the loop variable button
-On the same line insert the field label using the loop variable button
-Be sure to:
+    **Be sure to**:
+    * Use expression delimiters ```{{ }}```
 
-Close the for loop
-Use statement delimiters {% %} with the for loops
-Not use parentheses () when iterating through the category variable
-Use expression delimiters {{ }} for the standalone variables
+### Collect Form Data and Finalize Applicaiton
 
-Now let’s finish the form with the submit button.
+1.  Great work! Now let's finish the application off by implementing the form collection.
+    
+    In **app.py** inside the ```add_location``` route function create a form instance and validate the submission:
+    1. Create an ```AddLocationForm()``` instance with the argument ```csrf_enabled=False``` and assign it to a variable named ```add_form```.
+    2. Replace the ```True``` condition with the form instance’s ```validate_on_submit()``` function
 
-In locations.html populate the third row with an add_location button. Insert the submit field into the single <td> tag of the third row using the add_location template variable.
+20. Now its time to collect the data!
+    
+    In **app.py** inside the ```add_location()``` route and within the ```if``` statement, collect the form data:
+    1. Replace the ```None``` and assign the variable ```name``` to the ```name``` field ```data```
+    2. Replace the ```None``` and assign the variable ```description``` to the ```description``` field ```data```
+    3. Replace the ```None``` and assign the variable ```category``` to the ```category``` field ```data```
 
-Be sure to:
-
-Use expression delimiters {{ }}
+21. When a location is added we want to redirect to the category page the location was added. We will also set up a redirect from the ```/``` path without a variable.
+    
+    In **app.py** use ```redirect()``` to complete the application flow:
+    1. In the ```add_location()``` route function replace the empty string in the ```return``` statement with ```redirect()```
+    2. As the argument for ```redirect``` use ```url_for()``` and pass the locations route function and set the ```category``` keyword argument to the local variable ```category```. Set the ```_external``` and ```_scheme``` keyword arguments to load an HTTPS URL.
+    3. In the ```index()``` route function replace the empty string in the ```return``` statement with ```redirect()```
+    4. As the argument for ```redirect``` use ```url_for()``` and pass the locations route function and set the ```category``` keyword argument to ```"recommended"```. Set the ```_external``` and ```_scheme``` keyword arguments to load an HTTPS URL.
