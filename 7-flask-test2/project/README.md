@@ -151,3 +151,59 @@ Good luck and have fun. Let’s get started!!!
     1. Write an import statement that imports ```AddLocationForm``` from the forms file. Reference the ```locations``` import statement if necessary.
     2. Note that ```app.config['SECRET_KEY']``` is already set. Remember this is necessary to protect against a Cross-Site Request Forgery attack
     3. Now define a template variable in the call to ```render_template()``` within the ```locations()``` route. The template variable should be named ```add_location``` and assign it an instance of ```AddLocationForm()```
+
+### Implement the Form in the Template
+
+14. Now that we have access to the form in the template we need to tell the form what route will be handling the submission. We also need to implement the other part of the CSRF protection by inserting the form’s ```hidden_tag()``` method.
+    
+    In **locations.html** initialize the add location form:
+    1. Inside the ```<form class="addform">``` tag set the ```action``` attribute to ```url_for()``` with the add_location route as an argument
+    2. On the following line use the form template variable ```add_location``` and call the ```hidden_tag()``` method
+
+    **Be sure to**:
+    * Use ```url_for()``` inside double quotes
+    * Use single quotes for the route function name
+    * Use expression delimiters ```{{ }}```
+
+15. The structure of the form is created using an HTML table. The first row will be for the labels, the second for the fields and the third for the submit button.
+
+    In **locations.html** populate the first row of the table with the field labels:
+    1. Insert the ```name``` field ```label``` into the first ```<td>``` tag using the ```add_location``` template variable
+    2. Insert the ```description``` field ```label``` into the second ```<td>``` tag using the ```add_location``` template variable
+    3. Insert the ```category``` field ```label``` into the third ```<td>``` tag using the ```add_location``` template variable
+
+    **Be sure to**:
+    * Use expression delimiters ```{{ }}```
+
+16. Now we'll move onto inserting the name and description fields into the second row of the table.
+
+    In **locations.html** start to populate the second row of the table with the below fields:
+    1. Insert the ```name``` field into the first ```<td>``` tag of the second row using the ```add_location``` template variable
+    2. Insert the ```description``` field into the second ```<td>``` tag of the second row using the ```add_location``` template variable
+
+    **Be sure to**:
+    * Use expression delimiters ```{{ }}```
+
+
+For the category RadioField() buttons we need to iterate through the variable to insert the button elements
+
+In locations.html populate the third <td> column of the second row of the table with the RadioField() elements:
+
+Create a for loop inside the third <td> tag in the second row, making sure to surround the <div> tags
+Iterate through the category field using the add_location template variable and create a loop variable button
+Inside the <div> tags insert the field using the loop variable button
+On the same line insert the field label using the loop variable button
+Be sure to:
+
+Close the for loop
+Use statement delimiters {% %} with the for loops
+Not use parentheses () when iterating through the category variable
+Use expression delimiters {{ }} for the standalone variables
+
+Now let’s finish the form with the submit button.
+
+In locations.html populate the third row with an add_location button. Insert the submit field into the single <td> tag of the third row using the add_location template variable.
+
+Be sure to:
+
+Use expression delimiters {{ }}
