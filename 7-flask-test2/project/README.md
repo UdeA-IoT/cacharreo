@@ -128,3 +128,26 @@ Good luck and have fun. Let’s get started!!!
 
 ### Create A Form in Python
 
+11. Amazing! Already this is a properly functioning application.
+    
+    Now it is time for us to create a form to add a location. We’ll define the form in the **forms.py** file and add a name field, a description field, radio buttons for the category and a submit button.
+
+    Note: Provided in **forms.py** is a new form class, ```FieldsRequiredForm```, that inherits from ```FlaskForm```. This new type of form will allow us to require data for radio button form fields.
+
+    In **forms.py** start by defining the form and adding a ```StringField```
+    1. Create a form class named ```AddLocationForm()``` that inherits from ```FieldsRequiredForm```
+    2. Define an attribute name and assign it an instance of ```StringField()``` with the label ```"Location Name"``` and a ```DataRequired()``` validator.
+
+12. Good job! Now let’s complete the form.
+
+    In **forms.py** create 3 more field attributes:
+    1. Define an attribute ```description``` and assign it an instance of ```TextAreaField()``` with the label ```"Location Description"``` and a ```DataRequired()``` validator.
+    2. Define an attribute category and assign it an instance of ```RadioField()``` with the label ```"Category"``` and set ```choices``` equal to the defined variable ```categories```
+    3. Define an attribute ```submit``` and assign it an instance of ```SubmitField()``` with the label ```"Add Location"```
+
+13. Now that the form is done let’s set it up in our application so we can implement it in the template.
+
+    In **app.py** import the form and assign it to a template variable:
+    1. Write an import statement that imports ```AddLocationForm``` from the forms file. Reference the ```locations``` import statement if necessary.
+    2. Note that ```app.config['SECRET_KEY']``` is already set. Remember this is necessary to protect against a Cross-Site Request Forgery attack
+    3. Now define a template variable in the call to ```render_template()``` within the ```locations()``` route. The template variable should be named ```add_location``` and assign it an instance of ```AddLocationForm()```
