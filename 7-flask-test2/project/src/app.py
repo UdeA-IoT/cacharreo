@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from locations import Locations
+from forms import AddLocationForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SECRET_PROJECT'
@@ -14,15 +15,16 @@ DEL_ACTION = "X"
 def locations(category):
   locations = visit.get_list_by_category(category)
   ## Check the request for form data and process
-  if False:
-    [(name, action)] = [(None, None)]
+  if request.method == "POST":
+    # [(name, action)] = [(None, None)]
+    [(name, action)] = request.form.items()
 
     if action == UP_ACTION:
       visit.moveup(name)
     elif action == DEL_ACTION:
       visit.delete(name)
   ## Return the main template with variables
-  return render_template("locations.html", category = category, categories = categories, locations = locations)
+  return render_template("locations.html", category = category, categories = categories, locations = locations, add_location = AddLocationForm())
 
 @app.route("/add_location", methods=["POST"])
 def add_location():
