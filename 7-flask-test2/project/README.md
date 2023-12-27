@@ -231,3 +231,8 @@ Good luck and have fun. Let’s get started!!!
 ## Solucion completa
 
 [Link solucion](https://gist.github.com/codecademydev/a9a5c7e0df46ad351b8e0f67306c2489)
+
+```
+python -m venv myapp
+cd myapp
+```
