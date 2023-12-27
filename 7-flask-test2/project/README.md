@@ -227,3 +227,7 @@ Good luck and have fun. Let’s get started!!!
     2. As the argument for ```redirect``` use ```url_for()``` and pass the locations route function and set the ```category``` keyword argument to the local variable ```category```. Set the ```_external``` and ```_scheme``` keyword arguments to load an HTTPS URL.
     3. In the ```index()``` route function replace the empty string in the ```return``` statement with ```redirect()```
     4. As the argument for ```redirect``` use ```url_for()``` and pass the locations route function and set the ```category``` keyword argument to ```"recommended"```. Set the ```_external``` and ```_scheme``` keyword arguments to load an HTTPS URL.
+
+## Solucion completa
+
+[Link solucion](https://gist.github.com/codecademydev/a9a5c7e0df46ad351b8e0f67306c2489)
