@@ -207,7 +207,7 @@ Good luck and have fun. Let’s get started!!!
 
 ### Collect Form Data and Finalize Applicaiton
 
-1.  Great work! Now let's finish the application off by implementing the form collection.
+19. Great work! Now let's finish the application off by implementing the form collection.
     
     In **app.py** inside the ```add_location``` route function create a form instance and validate the submission:
     1. Create an ```AddLocationForm()``` instance with the argument ```csrf_enabled=False``` and assign it to a variable named ```add_form```.
@@ -216,9 +216,9 @@ Good luck and have fun. Let’s get started!!!
 20. Now its time to collect the data!
     
     In **app.py** inside the ```add_location()``` route and within the ```if``` statement, collect the form data:
-    1. Replace the ```None``` and assign the variable ```name``` to the ```name``` field ```data```
-    2. Replace the ```None``` and assign the variable ```description``` to the ```description``` field ```data```
-    3. Replace the ```None``` and assign the variable ```category``` to the ```category``` field ```data```
+    3. Replace the ```None``` and assign the variable ```name``` to the ```name``` field ```data```
+    4. Replace the ```None``` and assign the variable ```description``` to the ```description``` field ```data```
+    5. Replace the ```None``` and assign the variable ```category``` to the ```category``` field ```data```
 
 21. When a location is added we want to redirect to the category page the location was added. We will also set up a redirect from the ```/``` path without a variable.
     
