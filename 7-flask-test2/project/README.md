@@ -232,7 +232,58 @@ Good luck and have fun. Let’s get started!!!
 
 [Link solucion](https://gist.github.com/codecademydev/a9a5c7e0df46ad351b8e0f67306c2489)
 
+Crear el entorno virtual para la aplicacion:
+
 ```
 python -m venv myapp
 cd myapp
+.\Scripts\activate
+```
+
+Verificar version de python
+
+```
+python --version
+```
+
+Instalar dependencias
+
+```
+pip install flask
+pip install flask_wtf
+```
+
+Probar la aplicacion (```app.py```)
+
+```
+flask run
+```
+
+En el navegador se prueban las siguientes rutas:
+* **URL 1**: 127.0.0.1:5000/locations
+  
+  ![url1](url1.png)
+
+* **URL 2**: 127.0.0.1:5000/recommended
+  
+  ![url2](url2.png)
+
+* **URL 3**: 127.0.0.1:5000/tovisit
+  
+  ![url3](url3.png)
+
+* **URL 4**: 127.0.0.1:5000/visited
+  
+  ![url4](url4.png)
+
+Salir del servidor cuando se acaben las pruedas
+
+```
+CTRL + C (Combinacion de teclas)
+```
+
+Salir del entorno virtual
+
+```
+deactivate
 ```
