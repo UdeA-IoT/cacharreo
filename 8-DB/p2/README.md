@@ -330,3 +330,124 @@ Let’s summarize:
 
 **Cheatsheet**: What Can I Do With A Database? [[link](https://www.codecademy.com/learn/paths/cscj-22-databases/tracks/cscj-22-working-with-databases/modules/wdcp-22-what-can-i-do-with-a-database-77f195cc-06a4-457a-9db4-6f697f303f0e/cheatsheet)]
 
+## New York Restaurants
+
+We have put together a table of restaurants called nomnom and we need your help to answer some questions. Use the SQL commands you just learned and find the best dinner spots in the city.
+
+The schema of this table is available [here](nomnom.png).
+
+![base](nomnom.png)
+
+Let’s begin!
+
+## Write the following queries:
+
+1. Start by getting a feel for the ```nomnom``` table:
+   
+   ```sql
+   SELECT *
+   FROM nomnom;
+   ```
+
+2. What are the distinct ```neighborhood```s?
+3. What are the distinct ```cuisine``` types?
+4. Suppose we would like some ```Chinese``` takeout.
+   
+   What are our options?
+5. Return all the restaurants with ```review```s of 4 and above.
+6. Suppose Abbi and Ilana want to have a fancy dinner date.
+   
+   Return all the restaurants that are ```Italian``` and ```$$$```.
+7. Your coworker Trey can’t remember the exact name of a restaurant he went to but he knows it *contains* the word ‘meatball’ in it.
+   
+   Can you find it for him using a query?
+
+8. Let’s order delivery to the house!
+   
+   Find all the close by spots in ```Midtown```, ```Downtown``` or ```Chinatown```.
+   
+   (```OR``` can be used more than once)
+
+9.  Find all the ```health``` grade pending restaurants (```empty``` values).
+
+10. Create a Top 10 Restaurants Ranking based on ```review```s.
+11. Use a CASE statement to change the rating system to:
+    * ```review > 4.5``` is Extraordinary
+    * ```review > 4``` is Excellent
+    * ```review > 3``` is Good
+    * ```review > 2``` is Fair
+    * Everything else is Poor
+
+    Don’t forget to rename the new column!
+
+12.  If you are stuck on the project or would like to see an experienced developer work through the project, watch the project walkthrough video in the *+“Get Unstuck“ section!**
+
+## Comandos aplicados
+
+**Solución**: [link](https://gist.github.com/codecademydev/092715229bf48c074aa9919a6591428b)
+
+
+```sql
+-- 1 
+SELECT *
+FROM nomnom;
+
+-- 2
+SELECT DISTINCT neighborhood
+FROM nomnom; 
+
+-- 3
+SELECT DISTINCT cuisine
+FROM nomnom; 
+
+-- 4
+SELECT * 
+FROM nomnom
+WHERE cuisine = 'Chinese'; 
+
+-- 5
+SELECT *
+FROM nomnom
+WHERE review >= 4; 
+
+-- 6
+SELECT *
+FROM nomnom
+WHERE  cuisine = 'Italian'  AND price = '$$$'; 
+
+-- 7
+SELECT *
+FROM nomnom
+WHERE name LIKE '%meatball%';
+
+-- 8
+SELECT *
+FROM nomnom
+WHERE neighborhood = 'Midtown' 
+   OR neighborhood = 'Downtown' 
+   OR neighborhood = 'Chinatown';
+
+-- 9
+SELECT *
+FROM nomnom
+WHERE health IS NULL;
+
+-- 10
+SELECT *
+FROM nomnom
+ORDER BY review DESC
+LIMIT 10;
+
+-- 11
+SELECT *,
+CASE
+ WHEN review > 4.5 THEN 'Extraordinary'
+ WHEN review > 4 THEN 'Excellent'
+ WHEN review > 3 THEN 'Good'
+ WHEN review > 2 THEN 'Fair'
+ ELSE 'Poor'
+END AS 'Comment'
+FROM nomnom;
+
+--12
+```
