@@ -329,3 +329,4 @@ Let’s summarize:
 * ```CASE``` creates different outputs.
 
 **Cheatsheet**: What Can I Do With A Database? [[link](https://www.codecademy.com/learn/paths/cscj-22-databases/tracks/cscj-22-working-with-databases/modules/wdcp-22-what-can-i-do-with-a-database-77f195cc-06a4-457a-9db4-6f697f303f0e/cheatsheet)]
+
