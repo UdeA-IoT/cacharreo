@@ -604,10 +604,41 @@ SELECT CASE
   COUNT(*)
 FROM hacker_news
 GROUP BY 1;
+
+-- 8
+SELECT timestamp
+FROM hacker_news
+LIMIT 10;
+
+-- 9
+SELECT timestamp,
+   strftime('%H', timestamp)
+FROM hacker_news
+GROUP BY 1
+LIMIT 20;
 ```
 
+Vamos hasta aqui sin pistas
 
+```sql
+-- 10
+SELECT strftime('%H', timestamp),
+   AVG(score),
+   COUNT(score)
+FROM hacker_news
+GROUP BY 1
+LIMIT 25;
 
+-- 11
+SELECT strftime('%H', timestamp),
+   ROUND(AVG(score),2) AS AVERAGE,
+   COUNT(score) AS COUNT
+FROM hacker_news
+WHERE strftime('%H', timestamp) is NOT NULL
+GROUP BY 1
+LIMIT 25;
+```
 
+**Solución**: Queda pendiende corroborar los puntos que faltan.
 
 
