@@ -1,5 +1,8 @@
 # AGGREGATE FUNCTIONS
 
+Todo esto es tomado de **Codecademy**
+
+
 **Cheatsheet**: Aggregate Functions [[link](https://www.codecademy.com/learn/paths/cscj-22-databases/tracks/cscj-22-working-with-databases/modules/wdcp-22-aggregate-functions-737d40d0-3fcf-46fe-945e-d8cb26bcc7eb/cheatsheet)]
 
 ## 1 - Introduction
@@ -257,6 +260,10 @@ What are you waiting for? Let’s get started!
 
 If you get stuck during this project or would like to see an experienced developer work through it, click "Get Unstuck" to see a project walkthrough video.
 
+![3](3-ejemplo.png)
+
+![4](4-ejemplo_esquema.png)
+
 ### Tasks - Write the following queries:
 
 1. Getting started, take a look at the startups table:
@@ -312,3 +319,295 @@ If you get stuck during this project or would like to see an experienced develop
 13. What is the average size of a startup in each ```location```?
 
 14. What is the average size of a startup in each ```location```, with average sizes above 500?
+
+
+```sql
+-- 1
+SELECT *
+FROM startups;
+-- 2
+SELECT COUNT(*) 
+FROM startups;
+-- 3
+SELECT SUM(valuation)
+FROM startups;
+-- 4
+SELECT MAX(raised)
+FROM startups;
+-- 5
+SELECT MAX(raised)
+FROM startups
+WHERE stage = 'Seed';
+-- 6
+SELECT MIN(founded)
+FROM startups;
+-- 7
+SELECT AVG(valuation)
+FROM startups;
+-- 8
+SELECT category, AVG(valuation)
+FROM startups
+GROUP BY category;
+-- 9
+SELECT category, ROUND(AVG(valuation),2)
+FROM startups
+GROUP BY category;
+-- 10
+SELECT category, ROUND(AVG(valuation),2)
+FROM startups
+GROUP BY 1
+ORDER BY 2 DESC;
+-- 11
+SELECT category, COUNT(*)
+FROM startups
+GROUP BY category;
+-- 12a
+SELECT category, COUNT(*)
+FROM startups
+GROUP BY category
+HAVING COUNT(*) > 3;
+-- 12b
+SELECT category, COUNT(*)
+FROM startups
+GROUP BY category
+HAVING COUNT(*) > 3
+ORDER BY 2 DESC;
+-- 13
+SELECT location, AVG(employees)
+FROM startups
+GROUP BY location;
+-- 14
+SELECT location, AVG(employees)
+FROM startups
+GROUP BY location
+HAVING AVG(employees) > 500;    
+```
+
+**Solución**: [link](https://gist.github.com/codecademydev/2726be8626a3e487980374be214268e1)
+
+## Analyze Hacker News Trends
+
+![link](https://content.codecademy.com/courses/sql-intensive/hackernews.gif)
+
+[Hacker News](https://news.ycombinator.com/) is a popular website run by Y Combinator. It’s widely known by people in the tech industry as a community site for sharing news, showing off projects, asking questions, among other things.
+
+In this project, you will be working with a table named hacker_news that contains stories from Hacker News since its launch in 2007. It has the following columns:
+* ```title```: the title of the story
+* ```user```: the user who submitted the story
+* ```score```: the score of the story
+* ```timestamp```: the time of the story
+* ```url```: the link of the story
+
+This data was kindly made publicly available under the [MIT license](https://opensource.org/license/mit/).
+
+Let’s get started!
+
+### Tasks
+
+#### Understanding the dataset
+
+1. Start by getting a feel for the hacker_news table!
+
+   Let’s find the most popular Hacker News stories:
+   
+   ```sql
+   SELECT title, score
+   FROM hacker_news
+   ORDER BY score DESC
+   LIMIT 5;
+   ```
+    
+   What are the top five stories with the highest scores?
+
+#### Hacker News Moderating
+
+2. Recent studies have found that online forums tend to be dominated by a small percentage of their users ([1-9-90 Rule](https://en.wikipedia.org/wiki/1%25_rule)).
+   
+   *Is this true of Hacker News?*
+   
+   *Is a small percentage of Hacker News submitters taking the majority of the points?*
+   
+   First, find the total ```score``` of all the stories.
+
+3. Next, we need to pinpoint the users who have accumulated a lot of points across their stories.
+   
+   Find the individual users who have gotten combined ```score```s of more than 200, and their combined ```score```s.
+   
+   ```GROUP BY``` and ```HAVING``` are needed!
+
+4. Then, we want to add these users’ ```score```s together and divide by the total to get the percentage.
+   
+   Add their scores together and divide it by the total sum. Like so:
+
+   ```sql
+   SELECT (1.0 + 2.0 + 3.0) / 6.0;
+   ```
+
+   So, is Hacker News dominated by these users?
+
+5. Oh no! While we are looking at the power users, some users are [rickrolling](https://knowyourmeme.com/memes/rickroll) — tricking readers into clicking on a link to a funny [video](https://www.youtube.com/watch?v=dQw4w9WgXcQ) and claiming that it links to information about coding.
+
+   The ```url``` of the video is:
+   
+   ```https://www.youtube.com/watch?v=dQw4w9WgXcQ```
+
+   *How many times has each offending user posted this link?*
+
+#### Which sites feed Hacker News?
+
+6. Hacker News stories are essentially links that take users to other websites.
+   
+   Which of these sites feed Hacker News the most:
+   
+   [GitHub](https://github.com/), [Medium](https://medium.com/), or [New York Times](https://www.nytimes.com/)?
+   
+   First, we want to categorize each story based on their source.
+   
+   We can do this using a ```CASE``` statement:
+
+   ```sql
+   SELECT CASE
+      WHEN url LIKE '%github.com%' THEN 'GitHub'
+      -- WHEN statement here
+      -- WHEN statement here
+      -- ELSE statement here
+      END AS 'Source'
+   FROM hacker_news;
+   ```
+  
+   Fill in the other ```WHEN``` statements and the ```ELSE``` statement.
+
+7. Next, build on the previous query:
+   
+   Add a column for the number of stories from each URL using ```COUNT()```.
+
+   Also, ```GROUP BY``` the ```CASE``` statement.
+
+   Remember that you can refer to a column in ```GROUP BY``` using a number.
+
+#### What's the best time to post a story?
+
+8. Every submitter wants their story to get a high score so that the story makes it to the front page, but...
+   
+   *What’s the best time of the day to post a story on Hacker News?*
+   
+   Before we get started, let’s run this query and take a look at the ```timestamp``` column:
+   
+   ```sql
+   SELECT timestamp
+   FROM hacker_news
+   LIMIT 10;
+   ```
+   
+   Notice that the values are formatted like:
+
+   ```2018-05-08T12:30:00Z```
+
+   If you ignore the ```T``` and ```Z```, the format is:
+
+   ```YYYY-MM-DD HH:MM:SS```
+
+9. SQLite comes with a ```strftime()``` function - a very powerful function that allows you to return a formatted date.
+    
+    It takes two arguments:
+    
+    ```strftime(format, column)```
+
+    Let’s test this function out:
+
+    ```sql
+    SELECT timestamp,
+       strftime('%H', timestamp)
+    FROM hacker_news
+    GROUP BY 1
+    LIMIT 20;
+    ```
+
+    What do you think this does? Open the hint if you’d like to learn more.
+
+10. Okay, now we understand how ```strftime()``` works.
+    Let’s write a query that returns three columns:
+    1. The hours of the ```timestamp```
+    2. The average ```score``` for each hour
+    3. The count of stories for each hour
+
+11. Let’s edit a few things in the previous query:
+    * Round the average ```score```s (```ROUND()```).
+    * Rename the columns to make it more readable (```AS```).
+    * Add a ```WHERE``` clause to filter out the ```NULL``` values in ```timestamp```.
+
+    Take a look at the result again:
+    
+    What are the best hours to post a story on Hacker News?
+
+You made it past the finish line! If you're done, be sure to check off all the tasks for this project.
+
+### Solucion
+
+```sql
+-- 1 
+SELECT title, score
+FROM hacker_news
+ORDER BY score DESC
+LIMIT 5;
+```
+
+![5](5-ejemplo.png)
+
+```sql
+-- 2 
+SELECT SUM(score) AS TotalScore
+FROM hacker_news;
+
+-- 3
+SELECT user,SUM(score) AS TotalScore
+FROM hacker_news
+GROUP BY user 
+HAVING SUM(score) > 200
+ORDER BY score DESC;
+
+-- 4
+SELECT (517 + 309 + 304 + 282) / 6366.0;
+
+-- 5a
+SELECT user,
+   COUNT(*)
+FROM hacker_news
+WHERE url LIKE '%watch?v=dQw4w9WgXcQ%'
+GROUP BY user
+ORDER BY COUNT(*) DESC;
+
+-- 5b
+SELECT user,
+   COUNT(*)
+FROM hacker_news
+WHERE url LIKE '%watch?v=dQw4w9WgXcQ%'
+GROUP BY 1
+ORDER BY 2 DESC;
+
+-- 6
+SELECT CASE
+   WHEN url LIKE '%github.com%' THEN 'GitHub'
+   WHEN url LIKE '%medium.com%' THEN 'Medium'
+   WHEN url LIKE '%nytimes.com%' THEN 'New York Times'
+   ELSE 'Other'
+  END AS 'Source'
+FROM hacker_news;
+
+-- 7
+SELECT CASE
+   WHEN url LIKE '%github.com%' THEN 'GitHub'
+   WHEN url LIKE '%medium.com%' THEN 'Medium'
+   WHEN url LIKE '%nytimes.com%' THEN 'New York Times'
+   ELSE 'Other'
+  END AS 'Source', 
+  COUNT(*)
+FROM hacker_news
+GROUP BY 1;
+```
+
+
+
+
+
+
