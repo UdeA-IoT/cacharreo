@@ -174,9 +174,67 @@ reviews = db.relationship('Review', backref='reviewer', lazy='dynamic')
 
 ## 6 - Part II: declaring relationships (Foreign keys)
 
+We additionally have to specify what the foreign keys are for the model on the 'many' side of the relationship. To remind you, a foreign key is a field (or collection of fields) in one table that refers to the primary key in another table.
 
+In this exercise we want to create the following database schema:
 
 ![foreing_keys](foreing_keys.png)
+
+To complete the schema, we need to add the ```Review``` model, and specify the foreign keys (blue arrows) representing the following relationship:
+* One review ——– one book for which the review was written
+* One review ——– one reader who wrote that review
+
+The red arrows were covered in the previous exercise with the ```db.relationship()``` columns.
+
+
+```python
+#relationship of Books and Reviews
+reviews = db.relationship('Review', backref = 'book', lazy = 'dynamic') 
+#relationship of Reader and Reviews
+reviews = db.relationship('Review', backref='reviewer', lazy='dynamic') 
+```
+
+the ```Review``` model has its own columns such as ```text```, ```stars``` (denoting ratings), and its own primary key field ```id```. Review additionally needs to specify which other models it is related to by specifying their primary key in its foreign key column:
+
+```python
+#declaring the Review model
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key = True) #primary key column, automatically generated IDs
+    stars = db.Column(db.Integer, unique = False) #a review's rating
+    text = db.Column(db.String(200), unique = False) #a review's text
+    #here below is the foreign key column linking to the primary key (id) of the Book model (book). 
+    #Note the lower case here: 'book.id' instead of 'Book.id'
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id')) #foreign key column
+    ...
+```
+
+```python
+    #Note the lower case here: 'book.id' instead of 'Book.id'
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id')) #foreign key column
+```
+
+The ```book_id``` field is a foreign key that refers to the primary key ```id``` of the ```Book``` table. Similar to the primary key, a foreign key is just another column in our model with unique entries.
+
+Al final tenemos:
+
+```python
+#declaring the Review model
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key = True) #primary key column, automatically generated IDs
+    stars = db.Column(db.Integer, unique = False) #a review's rating
+    text = db.Column(db.String(200), unique = False) #a review's text
+    #here below is the foreign key column linking to the primary key (id) of the Book model (book). 
+    #Note the lower case here: 'book.id' instead of 'Book.id'
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id')) #foreign key column
+    #Checkpoint 1: your code here below (be careful about the indentation)
+    reviewer_id = db.Column(db.Integer, db.ForeignKey('reader.id')) #foreign key column
+    #get a nice printout for Review objects
+    def __repr__(self):
+        return "Review: {} stars: {}".format(self.text, self.stars)
+```
+
+## 7 - Putting it all together: initializing the database
+
 
 
 ## Referencias
