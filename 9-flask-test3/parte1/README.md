@@ -235,7 +235,101 @@ class Review(db.Model):
 
 ## 7 - Putting it all together: initializing the database
 
+When you ran your application in the previous exercises you might have realized that there is no database file created in the application folder. The reason is simple: we need to explicitly initialize the database according to the models declared.
 
+We can initialize our database in two ways:
+
+1. Using the interactive Python shell.
+   
+   ```
+   python3
+   ```
+
+   ```
+   >>> from app import db
+   >>> db.create_all()
+   >>> db
+   <SQLAlchemy engine=sqlite:////home/ccuser/workspace/flask-intro-sql-alchemy-initializing-database/myDB.db>
+   ```
+
+## 8 - Creating database entries: entities
+
+Now that we initialized our database schema, the next step is to start creating entries that will later populate the database. The beauty of SQLAlchemy Object Relational Mapper (ORM) is that our database entries are simply created as instances of Python classes representing the declared models.
+
+```python
+#This is a separate Python script in which we practice creating database objects
+#You can also perform these operations in command-line terminal
+from app import Reader, Book, Review
+
+b1 = Book(id = 123, title = 'Demian', author_name = "Hermann", author_surname = 'Hesse', month = "February", year = 2020)
+r1 = Reader(id = 342, name = 'Ann', surname = 'Adams', email = 'ann.adams@example.com')
+
+print("My first reader:", r1.name)
+
+#Checkpoint 1: 
+b2 = Book(id = 533, title = 'The Stranger', author_name = "Albert", author_surname = 'Camus', month = "April", year = 2019)
+#Checkpoint 2: 
+r2 = Reader(id = 765, name = 'Sam', surname = 'Adams', email = 'sam.adams@example.com')
+#Checkpoint 3: 
+print(b2.author_surname)
+#Checkpoint 4:
+print(len(r2.email))
+```
+
+## 9 - Creating database entries: relationships
+
+Creating objects for tables that have foreign keys is not much different from the usual creation of Python objects.
+
+```python
+b1 = Book(id = 123, title = 'Demian', author_name = 'Hermann', author_surname = 'Hesse')
+b2 = Book(id = 533, title = 'The stranger', author_name = 'Albert', author_surname = 'Camus')
+r1 = Reader(id = 342, name = 'Ann', surname = 'Adams', email = 'ann.adams@example.com')
+r2 = Reader(id = 312, name = 'Sam', surname = 'Adams', email = 'sam.adams@example.com')
+```
+
+To create an entry in the ```Review``` table, in addition to specifying a review text and a rating, we also need to specify which reader wrote the review, and for which book. In other words, we need to specify values for the review’s foreign keys ```reviewer_id``` and ```book_id``` that represent primary keys in ```Reader``` and ```Book```, respectively.
+
+```python
+rev1 = Review(id = 435, text = 'This book is amazing...', stars = 5, reviewer_id = r1.id, book_id = b1.id)
+```
+
+Luego:
+
+```python
+#This is a separate Python script in which we practice creating database objects
+#You can also perform these operations in command-line terminal
+from app import Reader, Book, Review
+
+b1 = Book(id = 123, title = 'Demian', author_name = 'Hermann', author_surname = 'Hesse')
+b2 = Book(id = 533, title = 'The stranger', author_name = 'Albert', author_surname = 'Camus')
+r1 = Reader(id = 342, name = 'Ann', surname = 'Adams', email = 'ann.adams@example.com')
+r2 = Reader(id = 312, name = 'Sam', surname = 'Adams', email = 'sam.adams@example.com')
+
+rev1 = Review(id = 435, text = 'This book is amazing...', stars = 5, reviewer_id = r1.id, book_id = b1.id)
+print(rev1) #prints the rev1 object
+print(rev1.text) #prints the text of the review rev1
+print(rev1.book_id) #prints the id of the book for which the review was written
+
+#Checkpoint 1: 
+rev2 = Review(id = 450, text = 'This book is difficult!', stars = 2, reviewer_id = r2.id, book_id = b2.id)
+
+#Checkpoint 2:
+print(len(rev2.text.split())) 
+```
+
+## 10 - Review
+
+In this lesson, you have learned how to:
+* import Flask-SQLAlchemy and configure your app to support database connections.
+* create your first model representing a table schema using Flask-SQLAlchemy ORM by declaring classes that extend ```Model```
+* specify attributes of database entities by using ```Column``` fields
+* set the primary key ```Column```
+* create a one-to-many relationship by using ```relationship()```
+* specify foreign key columns
+* initialize the database according to the declared models by using ```create_all()```
+* create database entries as instances of the declared Flask-SQLAlchemy classes
+
+We added the ```Annotation``` model to the ```app.py``` file in order to complete our database schema shown in the first exercise of this lesson. Moreover, we demonstrate for you in the browser how to combine the templates and database queries to list all the books we already put in the database for you. In the next lesson, you will learn how to accomplish this yourself! Excited? Let’s go.
 
 ## Referencias
 
