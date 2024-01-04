@@ -93,8 +93,24 @@ db = SQLAlchemy(app)
 
 ## 3 - Declaring a simple model: Book
 
+The database object ```db``` created in our application contains all the functions and helpers from both SQLAlchemy and SQLAlchemy Object Relational Mapper ([ORM](https://www.educative.io/answers/what-is-object-relational-mapping)). SQLAlchemy ORM associates user-defined Python classes with database tables, and instances of those classes (objects) with rows in their corresponding tables. The classes that mirror the database tables are referred to as *models*.
+
+We would like to create a Flask-SQLAlchemy ORM representation of the following table schema:
+
 ![book_schema](book_schema.png)
 
+```Model``` represents a declarative base in SQLAlchemy which can be used to declare models. For ```Book``` to be a database model for the database instance ```db```, it has to inherit from ```db.Model``` in the following way:
+
+```python
+class Book(db.Model):
+```
+
+**Codigo**: [link](https://gist.github.com/codecademydev/8bbc233c46c59c8f37fadab98755ea62)
+
+
+## 4 - Declaring a simple model: Reader
+
+![reader_schema](reader_schema.jpg)
 
 ## Referencias
 
