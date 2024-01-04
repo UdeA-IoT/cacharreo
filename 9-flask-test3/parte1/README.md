@@ -108,9 +108,76 @@ class Book(db.Model):
 **Codigo**: [link](https://gist.github.com/codecademydev/8bbc233c46c59c8f37fadab98755ea62)
 
 
+```python
+#declaring the Book model
+class Book(db.Model):
+    id = db.Column(db.Integer, primary_key = True) #primary key column
+    title = db.Column(db.String(80), index = True, unique = True) # book title
+    author_name = db.Column(db.String(50), index = True, unique = False) #author name
+    author_surname = db.Column(db.String(80), index = True, unique = False) #author surname
+    month = db.Column(db.String(20), index = True, unique = False) #the month of the book suggestion
+    year = db.Column(db.Integer, index = True, unique = False) #tthe year of the book suggestion
+    
+    #Get a nice printout for Book objects
+    def __repr__(self):
+        return "{} in: {},{}".format(self.title, self.month,self.year)
+```
+
 ## 4 - Declaring a simple model: Reader
 
+To make it easier for you, here’s the schema representation of ```Reader```:
+
 ![reader_schema](reader_schema.jpg)
+
+```python
+#Add your columns for the Reader model here below.
+class Reader(db.Model):
+  id = db.Column(db.Integer, primary_key = True)
+  #insert your code here
+  name = db.Column(db.String(50), index = True, unique = False)
+  surname = db.Column(db.String(80), index = True, unique = False)  
+  email = db.Column(db.String(120), index = True, unique = True)  
+  #get a nice printout for Reader objects
+  def __repr__(self):
+      return "Reader: {}".format(self.email)
+```
+
+## 5 - Part I: declaring relationships (one-to-many)
+
+Often times in real-world applications we will have entities that are somehow related. Students take courses, customers buy products, and users comment on posts.
+
+In SQLAlchemy we can declare a relationship with a field initialized with the ```.relationship()``` method. In one-to-many relationships, the ```relationship``` field is used on the 'one' side of the relationship. In our use case we have the following one-to-many relationships:
+1. One book ———< many reviews for that book
+2. One reader ——–< many reviews from that reader
+
+Hence, we add relationship fields to the ```Book``` and ```Reader``` models.
+
+We declare a one-to-many relationship between ```Book``` and ```Review``` by creating the following field in the ```Book``` model:
+
+```python
+reviews = db.relationship('Review', backref='book', lazy='dynamic')
+```
+
+where:
+* the first argument denotes which model is to be on the 'many' side of the relationship: ```Review```.
+* ```backref = 'book'``` establishes a ```book``` attribute in the related class (in our case, class Review) which will serve to refer back to the related ```Book``` object. *```lazy = dynamic``` makes related objects load as SQLAlchemy’s query objects.
+
+By adding ```relationship``` to ```Book``` we only handled one side in our one-to-many relationship. Specifically, we only covered the direction denoted by the red arrow in the schema below:
+
+![relation_review-book](relation_review-book.png)
+
+We will add the Review model and its relationship with the Book model (the blue arrow).
+
+```python
+reviews = db.relationship('Review', backref='reviewer', lazy='dynamic') 
+```
+
+## 6 - Part II: declaring relationships (Foreign keys)
+
+
+
+![foreing_keys](foreing_keys.png)
+
 
 ## Referencias
 
