@@ -93,6 +93,7 @@ db = SQLAlchemy(app)
 
 ## 3 - Declaring a simple model: Book
 
+![book_schema](book_schema.png)
 
 
 ## Referencias
