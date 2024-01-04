@@ -20,10 +20,15 @@ class Book(db.Model):
     def __repr__(self):
         return "{} in: {},{}".format(self.title, self.month,self.year)
 
-#Add your columns for the Reader model here below.
 class Reader(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   #insert your code here
+  name = db.Column(db.String(50), index = True, unique = False)
+  surname = db.Column(db.String(80), index = True, unique = False)  
+  email = db.Column(db.String(120), index = True, unique = True)  
+  #get a nice printout for Reader objects
+  def __repr__(self):
+      return "Reader: {}".format(self.email)
   
   #get a nice printout for Reader objects
   def __repr__(self):
