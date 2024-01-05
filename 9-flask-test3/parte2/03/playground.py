@@ -17,16 +17,15 @@ reviewer_111 = Review.query.get(111).reviewer #same result as line 10
 
 print("\nCheckpoint 1: fetch all the reviews made for a book with id = 13.")
 #book_13 = 
-#[print(book.id) for book in book_13]
+book_13 = Book.query.get(13).reviews.all()
+[print(book.id) for book in book_13]
 
 print("\nCheckpoint 2: fetch all the annotations made for a book with id = 19.")
 #book_19_an = 
-#[print(annotation.id) for annotation in book_19_an]
+book_19_an =  Book.query.get(19).annotations.all()
+[print(annotation.id) for annotation in book_19_an]
 
 print("\nCheckpoint 3: fetch the reader who owns the annotation with `id = 331.`")
 #author_331 = 
-#print(author_331)
-
-
-
-
+author_331 = Annotation.query.get(331).author
+print(author_331)
