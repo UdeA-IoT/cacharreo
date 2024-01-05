@@ -1,6 +1,8 @@
 # SQL + Flask
 
 * Parte 1 [[link]](parte1/)
+* Parte 2 [[link]](parte2/)
+* Proyecto [[link]](proyecto/)
 
 
 ## Referencias
