@@ -19,14 +19,17 @@ for reader in readers:
 
 #or inline
 #[print(reader.email) for reader in readers]
-
-print("\nCheckpoint1: fetching all the reviews")
+reviews = Review.query.all()
 #reviews = 
 
 print("\nCheckpoint2: looping through all the reviews and printing their text")
 #your loop line 1
 #you loop line 2
+for review in reviews: 
+    print(review.text)
+
+print("\nCheckpoint1: fetching all the reviews")
 
 print("\nCheckpoint3: fetching a book with id = 13 using the get() function")
 #book_1 = 
-
+book_1 = Book.query.get(12)
